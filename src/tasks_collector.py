@@ -54,8 +54,11 @@ if __name__ == '__main__':
 
     argparser = argparse.ArgumentParser(
         description='A program for parsing any selected tasks items in Outlook and generate report to pastebin')
+    argparser.add_argument('--outlook', action='store_true')
+    argparser.add_argument('--jirs', action='store_true')
     argparser.add_argument('--days', type=int, metavar='number_of_days_in_past',
                            help='Number of days to cover in the report')
+    argparser.add_argument('--sqlite_export', type=str, help='name of sqlite to export/update to')
     args = argparser.parse_args()
 
     now = dt.datetime.now()
@@ -71,7 +74,19 @@ if __name__ == '__main__':
 
     # tasks_to_pastebin(filter=True, from_date='2017-10-01', to_date='2017-12-01', sources=['outlook'], show_gantt=False)
 
-    outlook_tasks = get_outlook_tasks()
-    generic_tasks = to_generic(outlook_tasks, _type='outlook')
+    generic_tasks = []
+
+    if args.outlook:
+        outlook_tasks = get_outlook_tasks()
+        outlook_generic_tasks = to_generic(outlook_tasks, _type='outlook')
+        generic_tasks.extend(outlook_generic_tasks)
+
+    if args.jira:
+
+
     filtered_tasks = filter_generic_tasks(generic_tasks, from_date=_from, to_date=_to)
+
+    if args.sqlite_export:
+        db = OpenDB(args.sqlite_export)
+        db.insert_tasks(filtered_tasks)
     tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False)
