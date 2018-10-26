@@ -5,6 +5,7 @@
 __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
+import dateparser
 
 def format_subject(subject, _type='outlook'):
     import re
@@ -37,10 +38,16 @@ def parse_category(category_list, _type='outlook'):
 def convert_date_attribute(date):
     import datetime
     if type(date) is datetime.datetime:
-        date = date.strftime('%Y-%m-%d')
+        out_date = date.strftime('%Y-%m-%d')
+    elif date is None:
+        out_date = None
     else:
-        date = None
-    return date
+        parsed_date = dateparser.parse(date)
+        if parsed_date:
+            out_date = parsed_date.strftime('%Y-%m-%d')
+        else:
+            out_date = None
+    return out_date
 
 
 # noinspection PyUnboundLocalVariable,PyUnboundLocalVariable
@@ -63,12 +70,19 @@ def to_generic(tasks_list, _type='outlook'):
         elif _type == 'jira':
             key = task.key
             subject = f'[{key}] {task.fields.summary}'
-            client = task.fields.project
-            start_date = task.fields.created
-            close_date = task.fields.resolutiondate
-            modified_date = task.fields.updated
-            due_date = task.fields.duedate
-            status = 'open' if not task.fields.status == 'Done' else 'close'
+            client = task.fields.project.name
+            category = None
+            start_date = convert_date_attribute(task.fields.created)
+            close_date = convert_date_attribute(task.fields.resolutiondate)
+            modified_date = convert_date_attribute(task.fields.updated)
+            due_date = convert_date_attribute(task.fields.duedate)
+            status = 'open' if not task.fields.status.name == 'Done' else 'close'
+            # fix None dates
+            if not close_date:
+                close_date = modified_date
+            if not due_date:
+                due_date = modified_date
+
         generic_task = {'subject': subject,
                         'client': client,
                         'category': category,

@@ -44,4 +44,5 @@ class OpenDB(object):
                 task, created = Task.get_or_create(subject = t['subject'], defaults=t)
             except pw.IntegrityError as e:
                 logger.warning(f'unable to create database row for {t} due to {e}')
+                created = False
             logger.debug(f'record created: {created}')

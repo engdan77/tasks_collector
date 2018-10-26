@@ -2,14 +2,16 @@
 
 """project_name: Small project for collecting tickets"""
 import argparse
-from jira import JIRA
-import re
 import datetime as dt
 from reportgenerator import tasks_to_pastebin
 from tasksscraper.outlookscraper import get_outlook_tasks
+from tasksscraper.jirascraper import get_jira_tasks
 from tasksconverter import to_generic
 from reportgenerator import filter_generic_tasks
 from tasksdb import OpenDB
+import keyring
+from getpass import getpass
+
 
 # import keyring
 
@@ -17,45 +19,22 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 
-def get_all_ticket(jira_password):
-    # options = {'server': 'https://cog-jira.ipsoft.com', 'basic_auth': ('dengvall', pwd)}
-    jira = JIRA(basic_auth=('dengvall', jira_password), server='https://cog-jira.ipsoft.com')
-
-    # Get all projects viewable by anonymous users.
-    projects = jira.projects()
-    project = jira.project(10106)
-    issues_in_proj = jira.search_issues('project=SEB')
-    oh_crap = jira.search_issues('assignee = currentUser() order by priority desc', maxResults=5)
-    a = oh_crap[0].__dict__['key']
-    b = [oh_crap[0].fields.summary,
-         oh_crap[0].fields.created,
-         oh_crap[0].fields.description,
-         oh_crap[0].fields.labels,
-         oh_crap[0].fields.resolutiondate,
-         oh_crap[0].fields.status.name]
-
-    # Sort available project keys, then return the second, third, and fourth keys.
-    keys = sorted([project.key for project in projects])
-
-    # Get an issue.
-    issue = jira.issue('SEB-478')
-
-    # Find all comments made by Atlassians on this issue.
-    atl_comments = [comment for comment in issue.fields.comment.comments
-                    if re.search(r'@atlassian.com$', comment.author.emailAddress)]
-
-    pass
-
+def get_keyring(system, username):
+    password = keyring.get_password(system, username)
+    if not password:
+        password = getpass()
+        keyring.set_password(system, username, password)
+    return password
 
 # noinspection PyPep8
 if __name__ == '__main__':
     # pwd = keyring.get_password("tasks_collector", "daniel.engvall@ipsoft.com")
-    # get_all_ticket(pwd)
+    # get_jira_tasks(pwd)
 
     argparser = argparse.ArgumentParser(
         description='A program for parsing any selected tasks items in Outlook and generate report to pastebin')
     argparser.add_argument('--outlook', action='store_true')
-    argparser.add_argument('--jirs', action='store_true')
+    argparser.add_argument('--jira', help='username@jiraserver')
     argparser.add_argument('--days', type=int, metavar='number_of_days_in_past',
                            help='Number of days to cover in the report')
     argparser.add_argument('--sqlite_export', type=str, help='name of sqlite to export/update to')
@@ -82,6 +61,11 @@ if __name__ == '__main__':
         generic_tasks.extend(outlook_generic_tasks)
 
     if args.jira:
+        username, host = args.jira.split('@', 1)
+        password = get_keyring('tasks_collector', username)
+        jira_tasks = get_jira_tasks(host, username, password)
+        jira_generic_tasks = to_generic(jira_tasks, _type='jira')
+        generic_tasks.extend(jira_generic_tasks)
 
 
     filtered_tasks = filter_generic_tasks(generic_tasks, from_date=_from, to_date=_to)
