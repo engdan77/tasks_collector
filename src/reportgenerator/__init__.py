@@ -16,6 +16,7 @@ import datetime as dt
 import numpy as np
 import base64
 import json
+import dateparser
 
 __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
@@ -42,6 +43,14 @@ span.s2 {font-kerning: none}
 '''
 html_footer = '''</body>
 </html>'''
+
+
+def dict_keys_to_ymd(_dict, _keys=[]):
+    for k in _keys:
+        d = _dict[k]
+        parsed_date = dateparser.parse(str(d))
+        _dict[k] =parsed_date.strftime('%Y-%m-%d')
+    return _dict
 
 
 def _create_date(datetxt):
@@ -252,6 +261,7 @@ def filter_generic_tasks(generic_task_list, *, from_date=None, to_date=None, inc
     import datetime
     result = []
     for t in generic_task_list:
+        dict_keys_to_ymd(t, ['start_date', 'close_date', 'due_date', 'modified_date'])
         include_ticket = False
         if include_open and t['status'] == 'open':
             include_ticket = True
