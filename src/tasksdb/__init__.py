@@ -46,3 +46,11 @@ class OpenDB(object):
                 logger.warning(f'unable to create database row for {t} due to {e}')
                 created = False
             logger.debug(f'record created: {created}')
+
+    def get_all_tasks(self):
+        all_tasks = []
+        for task in Task.select():
+            t = task.__dict__['__data__']
+            t.pop('id')
+            all_tasks.append(t)
+        return all_tasks
