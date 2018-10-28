@@ -11,6 +11,7 @@ from reportgenerator import filter_generic_tasks
 from tasksdb import OpenDB
 import keyring
 from getpass import getpass
+import sys
 
 
 # import keyring
@@ -33,28 +34,32 @@ if __name__ == '__main__':
 
     argparser = argparse.ArgumentParser(
         description='A program for parsing any selected tasks items in Outlook and generate report to pastebin')
-    argparser.add_argument('--outlook', action='store_true')
-    argparser.add_argument('--jira', help='username@jiraserver')
-    argparser.add_argument('--days', type=int, metavar='number_of_days_in_past',
+    subparsers = argparser.add_subparsers(help='commands')
+    collect_parser = subparsers.add_parser('collect')
+    collect_parser.add_argument('--outlook', action='store_true')
+    collect_parser.add_argument('--jira', help='username@jiraserver')
+    collect_parser.add_argument('sqlite_database', type=str, help='name of sqlite to export/update to')
+    report_parser = subparsers.add_parser('report')
+    report_parser.add_argument('--days', type=int, default=10, metavar='number_of_days_in_past',
                            help='Number of days to cover in the report')
-    argparser.add_argument('--sqlite_export', type=str, help='name of sqlite to export/update to')
+    report_parser.add_argument('sqlite_database', help='name of sqlite to get data from')
+
     args = argparser.parse_args()
+    db = OpenDB(args.sqlite_database)
 
-    now = dt.datetime.now()
+    if args.days:
+        now = dt.datetime.now()
+        days = dt.timedelta(days=args.days)
+        _from = (now - days).strftime('%Y-%m-%d')
+        _to = (now + days).strftime('%Y-%m-%d')
+        all_tasks = db.get_all_tasks()
+        filtered_tasks = filter_generic_tasks(all_tasks, from_date=_from, to_date=_to)
+        tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False)
+        # tasks_to_pastebin(filter=True, from_date='2017-10-01', to_date='2017-12-01', sources=['outlook'], show_gantt=False)
+        sys.exit(0)
 
-    if not args.days:
-        process_days = 10
-    else:
-        process_days = args.days
-
-    days = dt.timedelta(days=process_days)
-    _from = (now - days).strftime('%Y-%m-%d')
-    _to = (now + days).strftime('%Y-%m-%d')
-
-    # tasks_to_pastebin(filter=True, from_date='2017-10-01', to_date='2017-12-01', sources=['outlook'], show_gantt=False)
-
+    # Else fetch data
     generic_tasks = []
-
     if args.outlook:
         outlook_tasks = get_outlook_tasks()
         outlook_generic_tasks = to_generic(outlook_tasks, _type='outlook')
@@ -67,10 +72,6 @@ if __name__ == '__main__':
         jira_generic_tasks = to_generic(jira_tasks, _type='jira')
         generic_tasks.extend(jira_generic_tasks)
 
+    db.insert_tasks(generic_tasks)
 
-    filtered_tasks = filter_generic_tasks(generic_tasks, from_date=_from, to_date=_to)
 
-    if args.sqlite_export:
-        db = OpenDB(args.sqlite_export)
-        db.insert_tasks(filtered_tasks)
-    tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False)
