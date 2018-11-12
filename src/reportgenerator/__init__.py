@@ -48,8 +48,9 @@ html_footer = '''</body>
 def dict_keys_to_ymd(_dict, _keys=[]):
     for k in _keys:
         d = _dict[k]
-        parsed_date = dateparser.parse(str(d))
-        _dict[k] =parsed_date.strftime('%Y-%m-%d')
+        if d:
+            parsed_date = dateparser.parse(str(d))
+            _dict[k] =parsed_date.strftime('%Y-%m-%d')
     return _dict
 
 

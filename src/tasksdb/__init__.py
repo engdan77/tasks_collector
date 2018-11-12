@@ -5,9 +5,18 @@
 import peewee as pw
 from logzero import logger
 import datetime
+from dictdiffer import diff
 
 db = pw.SqliteDatabase(None)
 now = datetime.datetime.now()
+
+
+def get_kv_task_as_text(task, remove_keys=['id']):
+    t = dict([(k, v.strftime('%Y-%m-%d')) if isinstance(v, datetime.date) else (k, v) for k, v in task.items()])
+    for _id in remove_keys:
+        t.pop(_id)
+    return t
+
 
 # Database model
 class BaseModel(pw.Model):
@@ -18,10 +27,10 @@ class Task(BaseModel):
     subject = pw.CharField(unique=True)
     client = pw.CharField(null=True)
     category = pw.CharField(null=True)
-    start_date = pw.DateField(default=now)
-    close_date = pw.DateField(default=now)
-    due_date = pw.DateField(default=now)
-    modified_date = pw.DateField(default=now)
+    start_date = pw.DateField(null=True)
+    close_date = pw.DateField(null=True)
+    due_date = pw.DateField(null=True)
+    modified_date = pw.DateField(null=True)
     status = pw.CharField(null=True)
 
 class OpenDB(object):
@@ -31,7 +40,7 @@ class OpenDB(object):
         db.create_tables([Task], safe=True)
         self.db = db
 
-    def insert_tasks(self, tasks_list_dict):
+    def insert_or_updates_tasks(self, tasks_list_dict):
         for t in tasks_list_dict:
             # only works with sqlite 3.24.0
             # rowid = (Task
@@ -41,10 +50,18 @@ class OpenDB(object):
             #     preserve=[Task.subject]).execute())
 
             try:
-                task, created = Task.get_or_create(subject = t['subject'], defaults=t)
+                task, created = Task.get_or_create(subject=t['subject'], defaults=t)
+                database_record = task.__dict__['__data__']
             except pw.IntegrityError as e:
                 logger.warning(f'unable to create database row for {t} due to {e}')
                 created = False
+            else:
+                if not created:
+                    dict_database_record = get_kv_task_as_text(database_record)
+                    dict_new_record = t
+                    if not dict_database_record == dict_new_record:
+                        logger.info(f'updating record "{t["subject"]}" {list(diff(dict_database_record, dict_new_record))}')
+                        Task.update(t).where(Task.subject == t['subject']).execute()
             logger.debug(f'record created: {created}')
 
     def get_all_tasks(self):

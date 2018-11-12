@@ -6,3 +6,4 @@ numpy==1.15.3
 keyring==15.1.0
 py_applescript==1.0.1
 matplotlib==3.0.0
+pyobjc==5.1.0

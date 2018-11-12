@@ -12,6 +12,8 @@ from tasksdb import OpenDB
 import keyring
 from getpass import getpass
 import sys
+import logzero
+import logging
 
 
 # import keyring
@@ -39,15 +41,19 @@ if __name__ == '__main__':
     collect_parser.add_argument('--outlook', action='store_true')
     collect_parser.add_argument('--jira', help='username@jiraserver')
     collect_parser.add_argument('sqlite_database', type=str, help='name of sqlite to export/update to')
+    collect_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
     report_parser = subparsers.add_parser('report')
     report_parser.add_argument('--days', type=int, default=10, metavar='number_of_days_in_past',
                            help='Number of days to cover in the report')
     report_parser.add_argument('sqlite_database', help='name of sqlite to get data from')
+    report_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
 
     args = argparser.parse_args()
+    logzero.loglevel(getattr(logging, args.loglevel))
+
     db = OpenDB(args.sqlite_database)
 
-    if args.days:
+    if 'days' in args.__dict__.keys():
         now = dt.datetime.now()
         days = dt.timedelta(days=args.days)
         _from = (now - days).strftime('%Y-%m-%d')
@@ -72,6 +78,6 @@ if __name__ == '__main__':
         jira_generic_tasks = to_generic(jira_tasks, _type='jira')
         generic_tasks.extend(jira_generic_tasks)
 
-    db.insert_tasks(generic_tasks)
+    db.insert_or_updates_tasks(generic_tasks)
 
 

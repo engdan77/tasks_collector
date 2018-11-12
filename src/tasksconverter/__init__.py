@@ -6,6 +6,8 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 import dateparser
+from datetime import timedelta
+from logzero import logger
 
 def format_subject(subject, _type='outlook'):
     import re
@@ -42,12 +44,22 @@ def convert_date_attribute(date):
     elif date is None:
         out_date = None
     else:
-        parsed_date = dateparser.parse(date)
+        parsed_date = dateparser.parse(str(date))
         if parsed_date:
             out_date = parsed_date.strftime('%Y-%m-%d')
         else:
             out_date = None
     return out_date
+
+
+def correct_task(input_dict):
+    i = input_dict
+    logger.debug(f'correcting dates in {input_dict}')
+    # make sure there is a start date
+    if 'start_date' in i.keys():
+        if i['start_date'] is None and 'close_date' in i.keys():
+            i['start_date'] = (dateparser.parse(i['close_date']) - timedelta(days=1)).strftime('%Y-%m-%d')
+    return i
 
 
 # noinspection PyUnboundLocalVariable,PyUnboundLocalVariable
@@ -76,9 +88,9 @@ def to_generic(tasks_list, _type='outlook'):
             close_date = convert_date_attribute(task.fields.resolutiondate)
             modified_date = convert_date_attribute(task.fields.updated)
             due_date = convert_date_attribute(task.fields.duedate)
-            status = 'open' if not task.fields.status.name == 'Done' else 'close'
+            status = 'open' if not any([_ in task.fields.status.name for _ in ('Done', 'Not in Scope')]) else 'close'
             # fix None dates
-            if not close_date:
+            if not close_date and status == 'close':
                 close_date = modified_date
             if not due_date:
                 due_date = modified_date
@@ -91,6 +103,7 @@ def to_generic(tasks_list, _type='outlook'):
                         'due_date': due_date,
                         'modified_date': modified_date,
                         'status': status}
+        generic_task = correct_task(generic_task)
         generic_list.append(generic_task)
     # sort the list
     generic_list = sorted(generic_list, key=lambda x: (str(x['client']), str(x['category']), str(x['status'])))
