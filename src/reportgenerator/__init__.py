@@ -207,10 +207,7 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
     # include_open = kwargs.get('include_open', True)
 
     logger.debug(json.dumps(generic_tasks))
-
     email_html = html_header
-
-    gantt_list = list()
 
     for t in generic_tasks:
         # Render HTML for tasks
@@ -221,6 +218,28 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
                                   close_date=t['close_date'],
                                   due_date=t['due_date'],
                                   start_date=t['start_date'])
+
+    # Render gantt
+    gantt_list = create_gantt_list(generic_tasks)
+    gantt_b64 = create_gantt_chart(gantt_list, show_gantt=show_gantt)
+
+    # Attach image
+    email_html += '<img src="data:image/png;base64,{}" alt="gantt.png">'.format(gantt_b64)
+
+    # Add footer
+    email_html += html_footer
+
+    logger.debug(email_html)
+
+    proc = subprocess.Popen(['/usr/local/bin/copyq', 'copy', 'text/html', '-'],
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = proc.communicate(input=email_html.encode('utf-8'))
+    logger.debug(out, err)
+
+
+def create_gantt_list(generic_tasks):
+    gantt_list = list()
+    for t in generic_tasks:
         # Create data for gantt
         client = default_client if not t['client'] else t['client']
         gantt_task_name = '{}:{}:{}'.format(client, t['category'], t['subject'][:30]) if t[
@@ -239,22 +258,7 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
                 if dt.datetime.strptime(t['due_date'], '%Y-%m-%d') < dt.datetime.now() and not gantt_status == 'close':
                     gantt_status = 'over_due'
         gantt_list.append([gantt_task_name, gantt_start_date, gantt_end_date, gantt_status])
-
-    # Render gantt
-    gantt_b64 = create_gantt_chart(gantt_list, show_gantt=show_gantt)
-
-    # Attach image
-    email_html += '<img src="data:image/png;base64,{}" alt="gantt.png">'.format(gantt_b64)
-
-    # Add footer
-    email_html += html_footer
-
-    logger.debug(email_html)
-
-    proc = subprocess.Popen(['/usr/local/bin/copyq', 'copy', 'text/html', '-'],
-                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = proc.communicate(input=email_html.encode('utf-8'))
-    logger.debug(out, err)
+    return gantt_list
 
 
 # noinspection PyPep8
