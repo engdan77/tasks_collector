@@ -115,7 +115,7 @@ def render_task(client, category, subject, **kwargs):
     return task
 
 
-def create_concurrent_chart(concurrent_list, date_key='date'):
+def create_concurrent_chart(concurrent_list, date_key='date', show_plot=True, concurrent_file='/tmp/concurrent.png', dpi=72):
     df = pd.DataFrame(concurrent_list)
     df[date_key] = pd.to_datetime(df[date_key], format='%Y-%m-%d')
     df = df.sort_values(date_key, ascending=True)
@@ -131,14 +131,31 @@ def create_concurrent_chart(concurrent_list, date_key='date'):
     df = df.interpolate("nearest")
     df = df.resample(resolution).mean()
     logger.debug('plotting concurrent chart')
+
+    # Get current size
+    fig_size = plt.rcParams["figure.figsize"]
+    # Prints: [8.0, 6.0]
+    print("Current size:", fig_size)
+    # Set figure width to 12 and height to 9
+    fig_size[0] = 20
+    fig_size[1] = 5
+    plt.rcParams["figure.figsize"] = fig_size
+
     df.plot.area()
+    plt.savefig(concurrent_file, dpi=dpi, bbox_inches='tight')
+    if show_plot:
+        plt.show()
+    with open(concurrent_file, 'rb') as f:
+        concurrent_b64 = base64.b64encode(f.read()).decode('utf-8')
+    return concurrent_b64
 
 
-def create_gantt_chart(task_list, *, show_gantt=True, gantt_file='/tmp/gantt.png', dpi=72):
+
+def create_gantt_chart(task_list, *, show_plot=True, gantt_file='/tmp/gantt.png', dpi=72):
     """
     Creates gantt chart
     :param dpi:
-    :param show_gantt:
+    :param show_plot:
     :param task_list:
     :param gantt_file:
     :return: return base64 encoded image
@@ -210,7 +227,7 @@ def create_gantt_chart(task_list, *, show_gantt=True, gantt_file='/tmp/gantt.png
     ax.invert_yaxis()
     fig.autofmt_xdate()
     plt.savefig(gantt_file, dpi=dpi, bbox_inches='tight')
-    if show_gantt:
+    if show_plot:
         plt.show()
     with open(gantt_file, 'rb') as f:
         gantt_b64 = base64.b64encode(f.read()).decode('utf-8')
@@ -241,8 +258,7 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
 
     # Render gantt
     gantt_list = create_gantt_list(generic_tasks)
-    gantt_b64 = create_gantt_chart(gantt_list, show_gantt=show_gantt)
-
+    gantt_b64 = create_gantt_chart(gantt_list, show_plot=show_gantt)
     # Attach image
     email_html += '<img src="data:image/png;base64,{}" alt="gantt.png">'.format(gantt_b64)
 
@@ -251,9 +267,8 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
     for t in generic_tasks:
         t.update({'client_category': '{}_{}'.format(t['client'], t['category'])})
     concurrent_list = create_concurrent_list(generic_tasks, name_key='client_category')
-    concurrent_b64 = create_concurrent_chart(concurrent_list, date_key='date')
-    pass
-
+    concurrent_b64 = create_concurrent_chart(concurrent_list, date_key='date', show_plot=show_gantt)
+    email_html += '<img src="data:image/png;base64,{}" alt="concurrent.png">'.format(concurrent_b64)
 
     # Add footer
     email_html += html_footer
