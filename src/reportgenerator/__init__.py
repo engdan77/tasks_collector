@@ -17,6 +17,7 @@ import numpy as np
 import base64
 import json
 import dateparser
+import pandas as pd
 
 __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
@@ -112,6 +113,25 @@ def render_task(client, category, subject, **kwargs):
     # Add suffix
     task += suffix
     return task
+
+
+def create_concurrent_chart(concurrent_list, date_key='date'):
+    df = pd.DataFrame(concurrent_list)
+    df[date_key] = pd.to_datetime(df[date_key], format='%Y-%m-%d')
+    df = df.sort_values(date_key, ascending=True)
+    df.set_index([date_key], inplace=True)
+    # Update resolution
+    timedelta = pd.to_datetime(df.iloc[-1].name) - pd.to_datetime(df.iloc[0].name)
+    if timedelta > pd.Timedelta(days=30):
+        resolution = '1W'
+    else:
+        resolution = 'D'
+    logger.debug(f'interpolating data to {resolution}')
+    df = df.resample("D").mean()
+    df = df.interpolate("nearest")
+    df = df.resample(resolution).mean()
+    logger.debug('plotting concurrent chart')
+    df.plot.area()
 
 
 def create_gantt_chart(task_list, *, show_gantt=True, gantt_file='/tmp/gantt.png', dpi=72):
@@ -226,6 +246,16 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
     # Attach image
     email_html += '<img src="data:image/png;base64,{}" alt="gantt.png">'.format(gantt_b64)
 
+
+    # Render concurrance chart
+    for t in generic_tasks:
+        t.update({'client_category': '{}_{}'.format(t['client'], t['category'])})
+    concurrent_list = create_concurrent_list(generic_tasks, name_key='client_category')
+    # concurrent_list = normalize_integers_in_dict_list(concurrent_list)
+    concurrent_b64 = create_concurrent_chart(concurrent_list, date_key='date')
+    pass
+
+
     # Add footer
     email_html += html_footer
 
@@ -235,6 +265,65 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
                             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = proc.communicate(input=email_html.encode('utf-8'))
     logger.debug(out, err)
+
+
+def all_values(in_data, key='name'):
+    return sorted(list(set([str(_[key]) for _ in in_data])))
+
+
+def count_items(in_data, dict_condition):
+    count = 0
+    for item in in_data:
+        condition_met = all([item.get(k, None) == v for k, v in dict_condition.items()])
+        if condition_met:
+            count += 1
+    return count
+
+
+def get_lowest_value(input_dict_list, key_name):
+    lowest = 0
+    for d in input_dict_list:
+        current_value = d[key_name]
+        if type(current_value) is int:
+            if current_value < lowest:
+                lowest = current_value
+    return lowest
+
+
+def normalize_integers_in_dict_list(input_dict_list):
+    first_item = input_dict_list[:1]
+    if not len(first_item) > 0:
+        return []
+    all_categories = list(next(iter(first_item)).keys())
+    all_categories.remove('date')
+    for c in all_categories:
+        increase_number = get_lowest_value(input_dict_list, c)
+        for d in input_dict_list:
+            if type(d[c]) is int:
+                if d[c] < 0:
+                    d[c] += -(increase_number)
+    return input_dict_list
+
+
+def create_concurrent_list(in_data, name_key='name', start_key='start_date', end_key='close_date'):
+    plot_data = []
+    all_dates = all_values(in_data, key=start_key) + all_values(in_data, key=end_key)
+    all_dates = [_ for _ in all_dates if not _ == 'None']
+    all_names = all_values(in_data, key=name_key)
+    counter = {name: 0 for name in all_names}
+    for date in sorted(all_dates):
+        count_dict = {'date': date}
+        for name in all_names:
+            count_start = count_items(in_data, {start_key: date, name_key: name})
+            count_end = count_items(in_data, {end_key: date, name_key: name})
+            count = count_start - count_end
+            # Prevent going below 0 when there is discrepancy
+            counter[name] += count
+            if counter[name] < 0:
+                counter[name] = 0
+            count_dict[name] = counter[name]
+        plot_data.append(count_dict)
+    return plot_data
 
 
 def create_gantt_list(generic_tasks):
