@@ -251,7 +251,6 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
     for t in generic_tasks:
         t.update({'client_category': '{}_{}'.format(t['client'], t['category'])})
     concurrent_list = create_concurrent_list(generic_tasks, name_key='client_category')
-    # concurrent_list = normalize_integers_in_dict_list(concurrent_list)
     concurrent_b64 = create_concurrent_chart(concurrent_list, date_key='date')
     pass
 
@@ -288,21 +287,6 @@ def get_lowest_value(input_dict_list, key_name):
             if current_value < lowest:
                 lowest = current_value
     return lowest
-
-
-def normalize_integers_in_dict_list(input_dict_list):
-    first_item = input_dict_list[:1]
-    if not len(first_item) > 0:
-        return []
-    all_categories = list(next(iter(first_item)).keys())
-    all_categories.remove('date')
-    for c in all_categories:
-        increase_number = get_lowest_value(input_dict_list, c)
-        for d in input_dict_list:
-            if type(d[c]) is int:
-                if d[c] < 0:
-                    d[c] += -(increase_number)
-    return input_dict_list
 
 
 def create_concurrent_list(in_data, name_key='name', start_key='start_date', end_key='close_date'):
@@ -361,7 +345,7 @@ def filter_generic_tasks(generic_task_list, *, from_date=None, to_date=None, inc
             include_ticket = True
         elif all([from_date, to_date]):
             # noinspection PyPep8
-            if datetime.datetime.strptime(from_date, '%Y-%m-%d') <= datetime.datetime.strptime(t['modified_date'],
+            if datetime.datetime.strptime(from_date, '%Y-%m-%d') <= datetime.datetime.strptime(t['start_date'],
                                                                                                '%Y-%m-%d') <= datetime.datetime.strptime(
                     to_date, '%Y-%m-%d'):
                 include_ticket = True
