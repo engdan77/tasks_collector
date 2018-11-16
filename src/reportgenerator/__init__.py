@@ -115,7 +115,7 @@ def render_task(client, category, subject, **kwargs):
     return task
 
 
-def create_concurrent_chart(concurrent_list, date_key='date', show_plot=True, concurrent_file='/tmp/concurrent.png', dpi=72):
+def create_concurrent_chart(concurrent_list, date_key='date', show_plot=False, concurrent_file='/tmp/concurrent.png', dpi=72):
     df = pd.DataFrame(concurrent_list)
     df[date_key] = pd.to_datetime(df[date_key], format='%Y-%m-%d')
     df = df.sort_values(date_key, ascending=True)
@@ -134,9 +134,6 @@ def create_concurrent_chart(concurrent_list, date_key='date', show_plot=True, co
 
     # Get current size
     fig_size = plt.rcParams["figure.figsize"]
-    # Prints: [8.0, 6.0]
-    print("Current size:", fig_size)
-    # Set figure width to 12 and height to 9
     fig_size[0] = 20
     fig_size[1] = 5
     plt.rcParams["figure.figsize"] = fig_size
