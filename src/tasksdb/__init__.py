@@ -64,6 +64,7 @@ class OpenDB(object):
                         Task.update(t).where(Task.subject == t['subject']).execute()
             logger.debug(f'record created: {created}')
 
+
     def get_all_tasks(self):
         all_tasks = []
         for task in Task.select():
@@ -71,3 +72,12 @@ class OpenDB(object):
             t.pop('id')
             all_tasks.append(t)
         return all_tasks
+
+
+    def cleanup(self, before_date):
+        tasks = Task.select().where((Task.start_date <= before_date) & (Task.status == 'open'))
+        logger.info('closing following tasks')
+        for t in tasks:
+            logger.info(t.subject)
+        tasks = Task.update(status='close').where((Task.start_date <= before_date) & (Task.status == 'open')).execute()
+        logger.info('cleanup complete')

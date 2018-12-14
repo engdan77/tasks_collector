@@ -13,6 +13,7 @@ import keyring
 from getpass import getpass
 import sys
 import logzero
+from logzero import logger
 import logging
 
 
@@ -31,11 +32,8 @@ def get_keyring(system, username):
 
 # noinspection PyPep8
 if __name__ == '__main__':
-    # pwd = keyring.get_password("tasks_collector", "daniel.engvall@ipsoft.com")
-    # get_jira_tasks(pwd)
-
     argparser = argparse.ArgumentParser(
-        description='A program for parsing any selected tasks items in Outlook and generate report to pastebin')
+        description='A program for parsing any selected tasks items in Outlook and/or Jira and generate report to pastebin')
     subparsers = argparser.add_subparsers(help='commands')
     collect_parser = subparsers.add_parser('collect')
     collect_parser.add_argument('--outlook', action='store_true')
@@ -47,6 +45,10 @@ if __name__ == '__main__':
                            help='Number of days to cover in the report')
     report_parser.add_argument('sqlite_database', help='name of sqlite to get data from')
     report_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
+    cleanup_parser = subparsers.add_parser('cleanup')
+    cleanup_parser.add_argument('--before', type=int, metavar='DAYS', help='tickets before this number of days back to be closed')
+    cleanup_parser.add_argument('sqlite_database', type=str, help='name of sqlite to export/update to')
+    cleanup_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
 
     args = argparser.parse_args()
     logzero.loglevel(getattr(logging, args.loglevel))
@@ -54,6 +56,7 @@ if __name__ == '__main__':
     db = OpenDB(args.sqlite_database)
 
     if 'days' in args.__dict__.keys():
+        logger.info('report command initiated')
         now = dt.datetime.now()
         days = dt.timedelta(days=args.days)
         _from = (now - days).strftime('%Y-%m-%d')
@@ -64,7 +67,18 @@ if __name__ == '__main__':
         # tasks_to_pastebin(filter=True, from_date='2017-10-01', to_date='2017-12-01', sources=['outlook'], show_gantt=False)
         sys.exit(0)
 
+    if 'before' in args.__dict__.keys():
+        logger.info('cleanup initiated')
+        now = dt.datetime.now()
+        days = dt.timedelta(days=args.__dict__['before'])
+        _before = (now - days)
+        logger.info(f'cleanup before {_before}')
+        db.cleanup(_before)
+        sys.exit(0)
+
+
     # Else fetch data
+    logger.info('collection initiated')
     generic_tasks = []
     if args.outlook:
         outlook_tasks = get_outlook_tasks()
