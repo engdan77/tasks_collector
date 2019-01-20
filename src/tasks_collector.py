@@ -15,6 +15,8 @@ import sys
 import logzero
 from logzero import logger
 import logging
+import PySimpleGUIQt as sg
+import PySide2
 
 
 # import keyring
@@ -44,6 +46,7 @@ if __name__ == '__main__':
     report_parser.add_argument('--days', type=int, default=10, metavar='number_of_days_in_past',
                            help='Number of days to cover in the report')
     report_parser.add_argument('sqlite_database', help='name of sqlite to get data from')
+    report_parser.add_argument('--copyq', action='store_true', help='paste output as MIME to pastebin, good for sending by e-mail')
     report_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
     cleanup_parser = subparsers.add_parser('cleanup')
     cleanup_parser.add_argument('--before', type=int, metavar='DAYS', help='tickets before this number of days back to be closed')
@@ -63,7 +66,8 @@ if __name__ == '__main__':
         _to = (now + days).strftime('%Y-%m-%d')
         all_tasks = db.get_all_tasks()
         filtered_tasks = filter_generic_tasks(all_tasks, from_date=_from, to_date=_to)
-        tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False)
+        if args.copyq:
+            tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False)
         # tasks_to_pastebin(filter=True, from_date='2017-10-01', to_date='2017-12-01', sources=['outlook'], show_gantt=False)
         sys.exit(0)
 
