@@ -1,6 +1,6 @@
 
 
-**Installation**
+##Installation
 
 Install CopyQ according to https://hluk.github.io/CopyQ/
 
@@ -32,6 +32,11 @@ optional arguments:
   --jira JIRA           username@jiraserver
   --loglevel {INFO,DEBUG}
 ```
+
+######Credentials
+
+Currently use keyring to allow you to store credentials locally not being exposed.
+First time you run it will prompt you for password.
 
 ####Report
 ```
