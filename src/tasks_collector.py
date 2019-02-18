@@ -4,6 +4,7 @@
 import argparse
 import datetime as dt
 from reportgenerator import tasks_to_pastebin
+from reportgenerator import get_gantt_b64, create_gantt_list
 from tasksscraper.outlookscraper import get_outlook_tasks
 from tasksscraper.jirascraper import get_jira_tasks
 from tasksconverter import to_generic
@@ -15,9 +16,6 @@ import sys
 import logzero
 from logzero import logger
 import logging
-import PySimpleGUIQt as sg
-import PySide2
-
 
 # import keyring
 
@@ -47,6 +45,7 @@ if __name__ == '__main__':
                            help='Number of days to cover in the report')
     report_parser.add_argument('sqlite_database', help='name of sqlite to get data from')
     report_parser.add_argument('--copyq', action='store_true', help='paste output as MIME to pastebin, good for sending by e-mail')
+    report_parser.add_argument('--show', action='store_true', help='show gantt image')
     report_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
     cleanup_parser = subparsers.add_parser('cleanup')
     cleanup_parser.add_argument('--before', type=int, metavar='DAYS', help='tickets before this number of days back to be closed')
@@ -68,6 +67,9 @@ if __name__ == '__main__':
         filtered_tasks = filter_generic_tasks(all_tasks, from_date=_from, to_date=_to)
         if args.copyq:
             tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False)
+        if args.show:
+            gantt_list = create_gantt_list(filtered_tasks)
+            get_gantt_b64(gantt_list, show_gantt=True)
         # tasks_to_pastebin(filter=True, from_date='2017-10-01', to_date='2017-12-01', sources=['outlook'], show_gantt=False)
         sys.exit(0)
 

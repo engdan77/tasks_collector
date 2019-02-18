@@ -255,7 +255,7 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
 
     # Render gantt
     gantt_list = create_gantt_list(generic_tasks)
-    gantt_b64 = create_gantt_chart(gantt_list, show_plot=show_gantt)
+    gantt_b64 = get_gantt_b64(gantt_list, show_gantt)
     # Attach image
     email_html += '<img src="data:image/png;base64,{}" alt="gantt.png">'.format(gantt_b64)
 
@@ -276,6 +276,17 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
                             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = proc.communicate(input=email_html.encode('utf-8'))
     logger.debug(out, err)
+
+
+def get_gantt_b64(gantt_list, show_gantt):
+    """
+    Returns base64 encoded string of gantt
+    :param gantt_list:
+    :param show_gantt:
+    :return: gant_b64 encoded string
+    """
+    gantt_b64 = create_gantt_chart(gantt_list, show_plot=show_gantt)
+    return gantt_b64
 
 
 def all_values(in_data, key='name'):
