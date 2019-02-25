@@ -6,6 +6,8 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 import applescript
+from logzero import logger
+import sys
 
 # noinspection PyPep8,PyPep8
 scpt = applescript.AppleScript('''

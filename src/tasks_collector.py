@@ -16,6 +16,7 @@ import sys
 import logzero
 from logzero import logger
 import logging
+import applescript
 
 # import keyring
 
@@ -87,9 +88,13 @@ if __name__ == '__main__':
     logger.info('collection initiated')
     generic_tasks = []
     if args.outlook:
-        outlook_tasks = get_outlook_tasks()
-        outlook_generic_tasks = to_generic(outlook_tasks, _type='outlook')
-        generic_tasks.extend(outlook_generic_tasks)
+        try:
+            outlook_tasks = get_outlook_tasks()
+        except applescript.ScriptError:
+            logger.warning('Unable to retrieve outlook tasks, make sure Outlook has been started')
+        else:
+            outlook_generic_tasks = to_generic(outlook_tasks, _type='outlook')
+            generic_tasks.extend(outlook_generic_tasks)
 
     if args.jira:
         username, host = args.jira.split('@', 1)
