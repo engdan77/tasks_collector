@@ -58,7 +58,8 @@ def correct_task(input_dict):
     # make sure there is a start date
     if 'start_date' in i.keys():
         if i['start_date'] is None and 'close_date' in i.keys():
-            i['start_date'] = (dateparser.parse(i['close_date']) - timedelta(days=1)).strftime('%Y-%m-%d')
+            if i['close_date'] is not None:
+                i['start_date'] = (dateparser.parse(i['close_date']) - timedelta(days=1)).strftime('%Y-%m-%d')
     return i
 
 

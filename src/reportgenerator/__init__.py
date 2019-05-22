@@ -117,6 +117,8 @@ def render_task(client, category, subject, **kwargs):
 
 def create_concurrent_chart(concurrent_list, date_key='date', show_plot=False, concurrent_file='/tmp/concurrent.png', dpi=72):
     df = pd.DataFrame(concurrent_list)
+    if len(df) == 0:
+        raise RuntimeError('No dates in dataframe try more dates')
     df[date_key] = pd.to_datetime(df[date_key], format='%Y-%m-%d')
     df = df.sort_values(date_key, ascending=True)
     df.set_index([date_key], inplace=True)

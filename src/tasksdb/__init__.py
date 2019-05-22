@@ -76,8 +76,15 @@ class OpenDB(object):
 
     def cleanup(self, before_date):
         tasks = Task.select().where((Task.start_date <= before_date) & (Task.status == 'open'))
-        logger.info('closing following tasks')
+        logger.info('closing following tasks:')
         for t in tasks:
             logger.info(t.subject)
         tasks = Task.update(status='close').where((Task.start_date <= before_date) & (Task.status == 'open')).execute()
+
+        logger.info('closing following closed tasks without close date closing today:')
+        tasks = Task.select().where((Task.start_date <= before_date) & (Task.status == 'close') & (Task.close_date == None))
+        for t in tasks:
+            logger.info(t.subject)
+        tasks = Task.update(close_date=datetime.datetime.now()).where((Task.start_date <= before_date) & (Task.status == 'close') & (Task.close_date == None)).execute()
+
         logger.info('cleanup complete')
