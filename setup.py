@@ -4,7 +4,6 @@ setup(
     name='tasks_collector',
     version='0.9.0',
     packages=find_packages(),
-    package_dir={'': 'tasks_collector'},
     url='https://github.com/engdan77/tasks_collector',
     license='MIT',
     author='Daniel Engvall',
