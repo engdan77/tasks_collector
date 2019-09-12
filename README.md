@@ -1,11 +1,14 @@
-
+##Background
+The purpose with this project was to address the headache of collecting and organizing the tasks are/have worked with.
+These tasks spread across different platforms such as Outlook, Jira and so forth and felt like I had to structure and
+ store these into a database and being able to create some charts based on this. 
 
 ##Installation
 
 Install CopyQ according to https://hluk.github.io/CopyQ/
 
 ```
-# cd src && pip install -r requirements.txt
+# install -r requirements.txt
 ```
 
 ##Usage

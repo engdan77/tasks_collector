@@ -9,3 +9,4 @@ matplotlib==3.0.0
 pyobjc==5.1.0
 PySimpleGUIQt
 PySide2
+Gooey==1.0.2

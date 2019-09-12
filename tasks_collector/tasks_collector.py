@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 """project_name: Small project for collecting tickets"""
+from gooey import Gooey
 import argparse
 import datetime as dt
 from reportgenerator import tasks_to_pastebin
@@ -18,10 +19,9 @@ from logzero import logger
 import logging
 import applescript
 
-# import keyring
-
 __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
+__version__ = "0.9.0"
 
 
 def get_keyring(system, username):
@@ -31,8 +31,9 @@ def get_keyring(system, username):
         keyring.set_password(system, username, password)
     return password
 
-# noinspection PyPep8
-if __name__ == '__main__':
+
+@Gooey
+def main():
     argparser = argparse.ArgumentParser(
         description='A program for parsing any selected tasks items in Outlook and/or Jira and generate report to pastebin')
     subparsers = argparser.add_subparsers(help='commands')
@@ -71,7 +72,6 @@ if __name__ == '__main__':
         if args.show:
             gantt_list = create_gantt_list(filtered_tasks)
             get_gantt_b64(gantt_list, show_gantt=True)
-        # tasks_to_pastebin(filter=True, from_date='2017-10-01', to_date='2017-12-01', sources=['outlook'], show_gantt=False)
         sys.exit(0)
 
     if 'before' in args.__dict__.keys():
@@ -82,7 +82,6 @@ if __name__ == '__main__':
         logger.info(f'cleanup before {_before}')
         db.cleanup(_before)
         sys.exit(0)
-
 
     # Else fetch data
     logger.info('collection initiated')
@@ -106,3 +105,8 @@ if __name__ == '__main__':
     db.insert_or_updates_tasks(generic_tasks)
 
 
+# noinspection PyPep8
+if __name__ == '__main__':
+    if '--ignore-gooey' in sys.argv:
+        logger.info('Disabling GUI')
+    main()

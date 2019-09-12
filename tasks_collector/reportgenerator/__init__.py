@@ -259,7 +259,7 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
     gantt_list = create_gantt_list(generic_tasks)
     gantt_b64 = get_gantt_b64(gantt_list, show_gantt)
     # Attach image
-    email_html += '<img src="data:image/png;base64,{}" alt="gantt.png">'.format(gantt_b64)
+    email_html += '<img tasks_collector="data:image/png;base64,{}" alt="gantt.png">'.format(gantt_b64)
 
 
     # Render concurrance chart
@@ -267,7 +267,7 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
         t.update({'client_category': '{}_{}'.format(t['client'], t['category'])})
     concurrent_list = create_concurrent_list(generic_tasks, name_key='client_category')
     concurrent_b64 = create_concurrent_chart(concurrent_list, date_key='date', show_plot=show_gantt)
-    email_html += '<img src="data:image/png;base64,{}" alt="concurrent.png">'.format(concurrent_b64)
+    email_html += '<img tasks_collector="data:image/png;base64,{}" alt="concurrent.png">'.format(concurrent_b64)
 
     # Add footer
     email_html += html_footer
