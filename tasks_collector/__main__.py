@@ -38,6 +38,7 @@ def get_args():
     argparser = argparse.ArgumentParser(
         description='A program for parsing any selected tasks items in Outlook and/or Jira and generate report to pastebin')
     argparser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
+    argparser.set_defaults(which='none')
     subparsers = argparser.add_subparsers(help='commands')
     collect_parser = subparsers.add_parser('collect')
     collect_parser.add_argument('--outlook', action='store_true')
