@@ -1,9 +1,13 @@
 from setuptools import setup, find_packages
 
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+
 setup(
     name='tasks_collector',
     version='0.9.0',
     packages=find_packages(),
+    install_requires=requirements,
     url='https://github.com/engdan77/tasks_collector',
     license='MIT',
     author='Daniel Engvall',
