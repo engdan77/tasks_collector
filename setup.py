@@ -11,7 +11,7 @@ setup(
     author_email='daniel@engvalls.eu',
     description='A small project for collecting tasks',
     entry_points={
-        'console_scripts': ['tasks_collector = tasks_collector:main'],
-        'gui_scripts': ['tasks_collector_gui = tasks_collector:main']
+        'console_scripts': ['tasks_collector = tasks_collector.tasks_collector:main'],
+        'gui_scripts': ['tasks_collector_gui = tasks_collector.tasks_collector:main']
         }
 )
