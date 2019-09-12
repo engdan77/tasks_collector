@@ -4,12 +4,10 @@
 from gooey import Gooey
 import argparse
 import datetime as dt
-from reportgenerator import tasks_to_pastebin
-from reportgenerator import get_gantt_b64, create_gantt_list
+from reportgenerator import get_gantt_b64, create_gantt_list, tasks_to_pastebin
 from tasksscraper.outlookscraper import get_outlook_tasks
 from tasksscraper.jirascraper import get_jira_tasks
 from tasksconverter import to_generic
-from reportgenerator import filter_generic_tasks
 from tasksdb import OpenDB
 import keyring
 from getpass import getpass

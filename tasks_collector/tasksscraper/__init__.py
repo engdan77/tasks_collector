@@ -1,7 +1,2 @@
-#!/usr/bin/env python
-
-"""tasksscraper: package collecting ticket scrapers"""
-
-__author__ = "Daniel Engvall"
-__email__ = "daniel@engvalls.eu"
-
+from .jirascraper import get_jira_tasks
+from .outlookscraper import get_outlook_tasks
