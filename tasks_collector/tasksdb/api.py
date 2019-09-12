@@ -6,10 +6,27 @@ import peewee as pw
 from logzero import logger
 import datetime
 from dictdiffer import diff
+from appdirs import user_config_dir
+from pathlib import Path
+import os
 
 db = pw.SqliteDatabase(None)
 now = datetime.datetime.now()
 
+
+def get_default_db_path():
+    p = globals().get('__package__')
+    local_config_dir = next(iter([d / 'config' for d in list(Path(os.path.abspath(__file__)).parents)[:2] if (d / 'config').exists()]), None)
+    if local_config_dir and local_config_dir.exists():
+        logger.info(f'found local config directory in {local_config_dir}')
+        base_config_dir = local_config_dir
+    else:
+        base_config_dir = user_config_dir(p)
+        logger.info(f'no local config directory, creating settings in {base_config_dir}')
+    conf_path = Path(base_config_dir) / Path(f'{p}.sqlite')
+    conf_path.parent.mkdir(parents=True, exist_ok=True)
+    logger.info(f"creating {conf_path}")
+    return str(conf_path)
 
 def get_kv_task_as_text(task, remove_keys=['id']):
     t = dict([(k, v.strftime('%Y-%m-%d')) if isinstance(v, datetime.date) else (k, v) for k, v in task.items()])

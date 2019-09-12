@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='tasks_collector',
-    version='0.9.0',
+    version='0.0.9',
     packages=find_packages(),
     install_requires=requirements,
     url='https://github.com/engdan77/tasks_collector',
