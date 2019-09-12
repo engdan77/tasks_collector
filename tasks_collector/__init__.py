@@ -1,0 +1,1 @@
+from .tasks_collector import main
