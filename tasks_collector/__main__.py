@@ -63,7 +63,6 @@ def get_args():
     return args, default_db_path
 
 
-
 def main():
     args, default_db_path = get_args()
     logzero.loglevel(getattr(logging, args.loglevel))

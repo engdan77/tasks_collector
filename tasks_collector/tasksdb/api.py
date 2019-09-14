@@ -14,7 +14,12 @@ db = pw.SqliteDatabase(None)
 now = datetime.datetime.now()
 
 
-def get_default_db_path():
+def get_default_db_path() -> str:
+    """Get a default database path
+
+    Returns:
+        str: path
+    """
     p = globals().get('__package__')
     local_config_dir = next(iter([d / 'config' for d in list(Path(os.path.abspath(__file__)).parents)[:2] if (d / 'config').exists()]), None)
     if local_config_dir and local_config_dir.exists():
@@ -51,6 +56,7 @@ class Task(BaseModel):
     status = pw.CharField(null=True)
 
 class OpenDB(object):
+    """A class to simplify creation of a database."""
     def __init__(self, db_file, type='sqlite'):
         db.init(db_file)
         db.connect()
