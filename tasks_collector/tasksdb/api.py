@@ -63,7 +63,7 @@ class OpenDB(object):
         db.create_tables([Task], safe=True)
         self.db = db
 
-    def insert_or_updates_tasks(self, tasks_list_dict):
+    def insert_or_updates_tasks(self, tasks_list_dict) -> None:
         for t in tasks_list_dict:
             # only works with sqlite 3.24.0
             # rowid = (Task
@@ -87,7 +87,6 @@ class OpenDB(object):
                         Task.update(t).where(Task.subject == t['subject']).execute()
             logger.debug(f'record created: {created}')
 
-
     def get_all_tasks(self):
         all_tasks = []
         for task in Task.select():
@@ -95,7 +94,6 @@ class OpenDB(object):
             t.pop('id')
             all_tasks.append(t)
         return all_tasks
-
 
     def cleanup(self, before_date):
         tasks = Task.select().where((Task.start_date <= before_date) & (Task.status == 'open'))
