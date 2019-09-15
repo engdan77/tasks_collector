@@ -6,21 +6,36 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 import dateparser
-from datetime import timedelta
+from datetime import timedelta, datetime
 from logzero import logger
+from typing import List, Dict, Union, Optional
 
-def format_subject(subject, _type='outlook'):
+
+def format_subject(subject: str, _type='outlook') -> str:
+    """Properly format subject
+
+    Args:
+        subject:
+        _type:
+
+    Returns:
+
+    """
     import re
     # Highlight keywords
     subject = re.sub('(@\w+\([^\]]+\))', '<b>\\1</b>', subject)
     return subject
 
-def parse_category(category_list, _type='outlook'):
-    """
-    Returns a dict with type of items
-    :param _type:
-    :param category_list:
-    :return:
+
+def parse_category(category_list: List, _type='outlook') -> Dict:
+    """Parse categories
+
+    Args:
+        category_list:
+        _type:
+
+    Returns:
+
     """
     import re
 
@@ -37,7 +52,16 @@ def parse_category(category_list, _type='outlook'):
                     result.update({_type: match.group(1)})
         return result
 
-def convert_date_attribute(date):
+
+def convert_date_attribute(date: Union[datetime, str]) -> Optional[str]:
+    """Converting date attribute
+
+    Args:
+        date:
+
+    Returns:
+
+    """
     import datetime
     if type(date) is datetime.datetime:
         out_date = date.strftime('%Y-%m-%d')
@@ -52,7 +76,15 @@ def convert_date_attribute(date):
     return out_date
 
 
-def correct_task(input_dict):
+def correct_task(input_dict: Dict) -> Union[str, Dict]:
+    """Correcting the task
+
+    Args:
+        input_dict:
+
+    Returns:
+
+    """
     i = input_dict
     logger.debug(f'correcting dates in {input_dict}')
     # make sure there is a start date
@@ -64,7 +96,17 @@ def correct_task(input_dict):
 
 
 # noinspection PyUnboundLocalVariable,PyUnboundLocalVariable
-def to_generic(tasks_list, _type='outlook'):
+def to_generic(tasks_list: List, _type='outlook') -> List:
+    """Make list of tasks generic
+
+    Args:
+        tasks_list:
+        _type:
+
+    Returns:
+        New list of generic tasks
+
+    """
     generic_list = list()
     for task in tasks_list:
         if _type == 'outlook':
@@ -109,6 +151,4 @@ def to_generic(tasks_list, _type='outlook'):
     # sort the list
     generic_list = sorted(generic_list, key=lambda x: (str(x['client']), str(x['category']), str(x['status'])))
     return generic_list
-
-
 
