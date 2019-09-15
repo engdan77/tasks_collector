@@ -18,6 +18,7 @@ import base64
 import json
 import dateparser
 import pandas as pd
+from typing import Dict, List, Union, Any
 
 __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
@@ -46,20 +47,33 @@ html_footer = '''</body>
 </html>'''
 
 
-def dict_keys_to_ymd(_dict, _keys=[]):
+def dict_keys_to_ymd(_dict: Dict, _keys: List=[]) -> Dict:
+    """Update keys with dates
+
+    Args:
+        _dict:
+        _keys:
+
+    Returns:
+        New dict with parsed dates
+
+    """
     for k in _keys:
         d = _dict[k]
         if d:
             parsed_date = dateparser.parse(str(d))
-            _dict[k] =parsed_date.strftime('%Y-%m-%d')
+            _dict[k] = parsed_date.strftime('%Y-%m-%d')
     return _dict
 
 
-def _create_date(datetxt):
-    """
-    Create matplot date
-    :param datetxt:
-    :return:
+def _create_date(datetxt: str) -> Any:
+    """Create matplot lib date
+
+    Args:
+        datetxt:
+
+    Returns:
+
     """
     year, month, day = datetxt.split('-')
     date = dt.datetime(int(year), int(month), int(day))
@@ -68,14 +82,17 @@ def _create_date(datetxt):
 
 
 # noinspection PyUnboundLocalVariable
-def render_task(client, category, subject, **kwargs):
-    """
-    Render HTML for task
-    :param client:
-    :param category:
-    :param subject:
-    :param kwargs:
-    :return: task in html
+def render_task(client: str, category: str, subject: str, **kwargs) -> str:
+    """Render HTML for task
+
+    Args:
+        client:
+        category:
+        subject:
+        **kwargs:
+
+    Returns:
+
     """
     status = kwargs.get('status', 'open')
     close_date = kwargs.get('close_date', None)
