@@ -93,7 +93,7 @@ def main():
         days = dt.timedelta(days=args.__dict__['before'])
         _before = (now - days)
         logger.info(f'cleanup before {_before}')
-        db.cleanup(_before)
+        cleanup(_before)
         sys.exit(0)
 
     # Else fetch data
@@ -115,7 +115,7 @@ def main():
             jira_tasks = get_jira_tasks(host, username, password)
             jira_generic_tasks = to_generic(jira_tasks, _type='jira')
             generic_tasks.extend(jira_generic_tasks)
-        db.insert_or_updates_tasks(generic_tasks)
+        insert_or_updates_tasks(generic_tasks)
 
 
 # noinspection PyPep8
