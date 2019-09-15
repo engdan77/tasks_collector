@@ -166,15 +166,22 @@ def create_concurrent_chart(concurrent_list, date_key='date', show_plot=False, c
     return concurrent_b64
 
 
+def create_gantt_chart(task_list: List,
+                       *,
+                       show_plot: bool = True,
+                       gantt_file: str = '/tmp/gantt.png',
+                       dpi: int = 72) -> str:
+    """Creates gantt chart
 
-def create_gantt_chart(task_list, *, show_plot=True, gantt_file='/tmp/gantt.png', dpi=72):
-    """
-    Creates gantt chart
-    :param dpi:
-    :param show_plot:
-    :param task_list:
-    :param gantt_file:
-    :return: return base64 encoded image
+    Args:
+        task_list:
+        show_plot:
+        gantt_file:
+        dpi:
+
+    Returns:
+        A base64 encoded image
+
     """
 
     ylabels = []
@@ -250,10 +257,16 @@ def create_gantt_chart(task_list, *, show_plot=True, gantt_file='/tmp/gantt.png'
     return gantt_b64
 
 
-def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
-    """
-    Creates tasks and inserted to pastebin
-    :return:
+def tasks_to_pastebin(generic_tasks: List, _filter: bool = False, show_gantt: bool = True) -> None:
+    """Creates tasks and inserted to pastebin
+
+    Args:
+        generic_tasks:
+        _filter:
+        show_gantt:
+
+    Returns:
+
     """
     # from_date = kwargs.get('from_date', None)
     # to_date = kwargs.get('to_date', None)
@@ -297,22 +310,43 @@ def tasks_to_pastebin(generic_tasks, _filter=False, show_gantt=True):
     logger.debug(out, err)
 
 
-def get_gantt_b64(gantt_list, show_gantt):
-    """
-    Returns base64 encoded string of gantt
-    :param gantt_list:
-    :param show_gantt:
-    :return: gant_b64 encoded string
+def get_gantt_b64(gantt_list: List, show_gantt: bool = True) -> str:
+    """Returns base64 encoded string of gantt
+
+    Args:
+        gantt_list:
+        show_gantt:
+
+    Returns:
+
     """
     gantt_b64 = create_gantt_chart(gantt_list, show_plot=show_gantt)
     return gantt_b64
 
 
-def all_values(in_data, key='name'):
+def all_values(in_data: List, key: str = 'name') -> List:
+    """Create sorted list
+
+    Args:
+        in_data:
+        key:
+
+    Returns:
+
+    """
     return sorted(list(set([str(_[key]) for _ in in_data])))
 
 
-def count_items(in_data, dict_condition):
+def count_items(in_data: List, dict_condition: Dict) -> int:
+    """Count items
+
+    Args:
+        in_data:
+        dict_condition:
+
+    Returns:
+
+    """
     count = 0
     for item in in_data:
         condition_met = all([item.get(k, None) == v for k, v in dict_condition.items()])
@@ -321,7 +355,16 @@ def count_items(in_data, dict_condition):
     return count
 
 
-def get_lowest_value(input_dict_list, key_name):
+def get_lowest_value(input_dict_list: Dict, key_name: str) -> int:
+    """Get lowest value
+
+    Args:
+        input_dict_list:
+        key_name:
+
+    Returns:
+
+    """
     lowest = 0
     for d in input_dict_list:
         current_value = d[key_name]
