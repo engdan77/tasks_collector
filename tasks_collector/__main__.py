@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """project_name: Small project for collecting tickets"""
-from gooey import Gooey
+from gooey import Gooey, GooeyParser
 import argparse
 import datetime as dt
 import keyring
@@ -33,23 +33,33 @@ def get_keyring(system, username):
 
 
 @Gooey
-def get_args():
+def get_args(**kwargs):
     default_db_path = get_default_db_path()
-    argparser = argparse.ArgumentParser(
-        description='A program for parsing any selected tasks items in Outlook and/or Jira and generate report to pastebin')
+    app_description = 'A program for parsing any selected tasks items in Outlook and/or Jira and generate report to pastebin'
+    gui_enabled = kwargs.get('gui_enabled', True)
+    db_args = ('--sqlite_database',)
+    db_kwargs = dict(help='name of sqlite to export/update to',
+                     default=default_db_path)
+    if gui_enabled:
+        db_kwargs['widget'] = 'FileChooser'
+        argparser = GooeyParser(description=app_description)
+    else:
+        argparser = argparse.ArgumentParser(description=app_description)
+
     argparser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
     argparser.set_defaults(which='none')
     subparsers = argparser.add_subparsers(help='commands')
     collect_parser = subparsers.add_parser('collect')
     collect_parser.add_argument('--outlook', action='store_true')
     collect_parser.add_argument('--jira', help='username@jiraserver')
-    collect_parser.add_argument('--sqlite_database', default=default_db_path, help='name of sqlite to export/update to')
+    # collect_parser.add_argument('--sqlite_database', help='name of sqlite to export/update to', default=default_db_path, widget='FileChooser')
+    collect_parser.add_argument(*db_args, **db_kwargs)
     collect_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
     collect_parser.set_defaults(which='collect')
     report_parser = subparsers.add_parser('report')
     report_parser.add_argument('--days', type=int, default=10, metavar='number_of_days_in_past',
                            help='Number of days to cover in the report')
-    report_parser.add_argument('--sqlite_database', default=default_db_path, help='name of sqlite to get data from')
+    report_parser.add_argument(*db_args, **db_kwargs)
     report_parser.add_argument('--copyq', action='store_true', help='paste output as MIME to pastebin, good for sending by e-mail')
     report_parser.add_argument('--show', action='store_true', help='show gantt image')
     report_parser.add_argument('--default_client', type=str, default='MyCompany', metavar='name of default client')
@@ -64,8 +74,8 @@ def get_args():
     return args, default_db_path
 
 
-def main():
-    args, default_db_path = get_args()
+def main(**kwargs):
+    args, default_db_path = get_args(**kwargs)
     logzero.loglevel(getattr(logging, args.loglevel))
     if 'sqlite_database' not in args.__dict__.keys():
         db_path = default_db_path
@@ -121,6 +131,8 @@ def main():
 
 # noinspection PyPep8
 if __name__ == '__main__':
+    _gui = True
     if '--ignore-gooey' in sys.argv:
+        _gui = False
         logger.info('Disabling GUI')
-    main()
+    main(gui_enabled=_gui)

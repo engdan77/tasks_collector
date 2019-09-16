@@ -7,6 +7,7 @@ __email__ = "daniel@engvalls.eu"
 
 from jira import JIRA
 from logzero import logger
+from typing import List
 # import keyring
 
 
