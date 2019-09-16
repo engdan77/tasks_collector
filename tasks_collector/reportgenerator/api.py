@@ -24,8 +24,6 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 
-default_client = 'IPsoft'
-
 html_header = u'''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -98,6 +96,7 @@ def render_task(client: str, category: str, subject: str, **kwargs) -> str:
     close_date = kwargs.get('close_date', None)
     due_date = kwargs.get('due_date', None)
     start_date = kwargs.get('start_date', None)
+    default_client = kwargs.get('default_client', 'None')
     suffix = '</span></p>'
 
     if status == u'open':
@@ -257,7 +256,7 @@ def create_gantt_chart(task_list: List,
     return gantt_b64
 
 
-def tasks_to_pastebin(generic_tasks: List, _filter: bool = False, show_gantt: bool = True) -> None:
+def tasks_to_pastebin(generic_tasks: List, _filter: bool = False, show_gantt: bool = True, default_client=None) -> None:
     """Creates tasks and inserted to pastebin
 
     Args:
@@ -283,7 +282,8 @@ def tasks_to_pastebin(generic_tasks: List, _filter: bool = False, show_gantt: bo
                                   status=t['status'],
                                   close_date=t['close_date'],
                                   due_date=t['due_date'],
-                                  start_date=t['start_date'])
+                                  start_date=t['start_date'],
+                                  default_client=default_client)
 
     # Render gantt
     gantt_list = create_gantt_list(generic_tasks)

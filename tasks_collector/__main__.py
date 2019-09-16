@@ -52,6 +52,7 @@ def get_args():
     report_parser.add_argument('--sqlite_database', default=default_db_path, help='name of sqlite to get data from')
     report_parser.add_argument('--copyq', action='store_true', help='paste output as MIME to pastebin, good for sending by e-mail')
     report_parser.add_argument('--show', action='store_true', help='show gantt image')
+    report_parser.add_argument('--default_client', type=str, default='MyCompany', metavar='name of default client')
     report_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
     report_parser.set_defaults(which='report')
     cleanup_parser = subparsers.add_parser('cleanup')
@@ -81,7 +82,7 @@ def main():
         all_tasks = db.get_all_tasks()
         filtered_tasks = filter_generic_tasks(all_tasks, from_date=_from, to_date=_to)
         if args.copyq:
-            tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False)
+            tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False, default_client=args.default_client)
         if args.show:
             gantt_list = create_gantt_list(filtered_tasks)
             reportgenerator.api.get_gantt_b64(gantt_list, show_gantt=True)
