@@ -17,6 +17,22 @@ In general you only need to pass the sqlite database where you'd like to store i
 ####Collect
 #####Outlook
 When passing --outlook argument you just need to make sure you've selected all Outlook-tasks including those completed.
+While using Outlook you can add the following naming convention of Outlooks "Categories" 
+
+(client1)
+(client2)
+(client3)
+...
+
+for giving you possibility to assign clients associated with task.
+
+{project1}
+{project2}
+{project3}
+...
+
+for assigning the task specific project.
+
 #####Jira
 The script will use the username@jiraserver supplied to detect all tasks that are assigned to you and collect their most recent details into the database.
 
