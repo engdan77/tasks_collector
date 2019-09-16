@@ -10,7 +10,19 @@ from logzero import logger
 # import keyring
 
 
-def get_jira_tasks(host, username, jira_password, max_results=1000):
+def get_jira_tasks(host: str, username: str, jira_password: str, max_results: int = 1000) -> List:
+    """Query Jira for tickets
+
+    Args:
+        host:
+        username:
+        jira_password:
+        max_results:
+
+    Returns:
+        List of tasks
+
+    """
     # options = {'server': 'https://cog-jira.ipsoft.com', 'basic_auth': ('dengvall', pwd)}
     jira = JIRA(basic_auth=(username, jira_password), server=f'https://{host}')
 

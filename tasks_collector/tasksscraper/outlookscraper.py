@@ -6,8 +6,16 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 import applescript
+from typing import List
 
-def get_outlook_tasks():
+
+def get_outlook_tasks() -> List:
+    """Get Outlook tasks
+
+    Returns:
+        List of tasks from Outlook
+
+    """
     # noinspection PyPep8,PyPep8
     scpt = applescript.AppleScript('''
     on getTasks()
