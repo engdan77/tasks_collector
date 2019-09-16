@@ -18,7 +18,7 @@ import base64
 import json
 import dateparser
 import pandas as pd
-from typing import Dict, List, Union, Any
+from typing import Dict, List, Optional, Any
 
 __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
@@ -374,7 +374,22 @@ def get_lowest_value(input_dict_list: Dict, key_name: str) -> int:
     return lowest
 
 
-def create_concurrent_list(in_data, name_key='name', start_key='start_date', end_key='close_date'):
+def create_concurrent_list(in_data: List,
+                           name_key: str = 'name',
+                           start_key: str = 'start_date',
+                           end_key: str = 'close_date') -> List:
+    """Creates list of concurrent tasks to generate plot of
+
+    Args:
+        in_data:
+        name_key:
+        start_key:
+        end_key:
+
+    Returns:
+        List to generate plots
+
+    """
     plot_data = []
     all_dates = all_values(in_data, key=start_key) + all_values(in_data, key=end_key)
     all_dates = [_ for _ in all_dates if not _ == 'None']
@@ -395,8 +410,17 @@ def create_concurrent_list(in_data, name_key='name', start_key='start_date', end
     return plot_data
 
 
-def create_gantt_list(generic_tasks):
-    gantt_list = list()
+def create_gantt_list(generic_tasks: List) -> List:
+    """Creates a list formatting tasks names etc
+
+    Args:
+        generic_tasks:
+
+    Returns:
+        New list
+
+    """
+    gantt_list = []
     for t in generic_tasks:
         # Create data for gantt
         client = default_client if not t['client'] else t['client']
@@ -420,7 +444,23 @@ def create_gantt_list(generic_tasks):
 
 
 # noinspection PyPep8
-def filter_generic_tasks(generic_task_list, *, from_date=None, to_date=None, include_open=True):
+def filter_generic_tasks(generic_task_list: List,
+                         *,
+                         from_date: Optional[str] = None,
+                         to_date: Optional[str] = None,
+                         include_open: bool = True) -> List:
+    """Filter generic tasks based on criterias
+
+    Args:
+        generic_task_list:
+        from_date:
+        to_date:
+        include_open:
+
+    Returns:
+        A new task list
+
+    """
     import datetime
     result = []
     for t in generic_task_list:
