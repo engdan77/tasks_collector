@@ -32,15 +32,13 @@ def get_keyring(system, username):
     return password
 
 
-@Gooey
-def get_args(**kwargs):
+def get_args():
     default_db_path = get_default_db_path()
-    app_description = 'A program for parsing any selected tasks items in Outlook and/or Jira and generate report to pastebin'
-    gui_enabled = kwargs.get('gui_enabled', True)
+    app_description = 'A program for parsing any selected tasks\nitems in Outlook and/or Jira and generate report to pastebin'
     db_args = ('--sqlite_database',)
     db_kwargs = dict(help='name of sqlite to export/update to',
                      default=default_db_path)
-    if gui_enabled:
+    if not gui_disabled:
         db_kwargs['widget'] = 'FileChooser'
         argparser = GooeyParser(description=app_description)
     else:
@@ -74,8 +72,14 @@ def get_args(**kwargs):
     return args, default_db_path
 
 
-def main(**kwargs):
-    args, default_db_path = get_args(**kwargs)
+def main():
+    global gui_disabled
+    gui_disabled = '--ignore_gooey' in sys.argv
+    if gui_disabled:
+        args, default_db_path = get_args()
+    else:
+        return Gooey(get_args, program_name='Tasks Collector', navigation='TABBED')()
+
     logzero.loglevel(getattr(logging, args.loglevel))
     if 'sqlite_database' not in args.__dict__.keys():
         db_path = default_db_path
@@ -131,8 +135,5 @@ def main(**kwargs):
 
 # noinspection PyPep8
 if __name__ == '__main__':
-    _gui = True
-    if '--ignore-gooey' in sys.argv:
-        _gui = False
-        logger.info('Disabling GUI')
-    main(gui_enabled=_gui)
+    logger.info('Pass argument --ignore-gooey to use CLI')
+    main()
