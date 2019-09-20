@@ -15,7 +15,7 @@ import applescript
 from tasks_collector import reportgenerator
 from tasks_collector.reportgenerator.api import filter_generic_tasks, tasks_to_pastebin, create_gantt_list
 from tasks_collector.tasksconverter.api import to_generic
-from tasks_collector.tasksdb.api import get_default_db_path, OpenDB
+from tasks_collector.tasksdb.api import get_default_db_path, insert_or_updates_tasks, OpenDB
 from tasks_collector.tasksscraper.jirascraper import get_jira_tasks
 import tasks_collector.tasksscraper.outlookscraper
 
@@ -77,8 +77,12 @@ def main():
     gui_disabled = '--ignore_gooey' in sys.argv
     if gui_disabled:
         args, default_db_path = get_args()
+        logger.info('no gui')
     else:
+        logger.info('gui')
+        # TODO: some tricky things need to be fixed to able to --ignore-gooey
         return Gooey(get_args, program_name='Tasks Collector', navigation='TABBED')()
+
 
     logzero.loglevel(getattr(logging, args.loglevel))
     if 'sqlite_database' not in args.__dict__.keys():
@@ -98,7 +102,7 @@ def main():
         if args.copyq:
             tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False, default_client=args.default_client)
         if args.show:
-            gantt_list = create_gantt_list(filtered_tasks)
+            gantt_list = create_gantt_list(filtered_tasks, args.default_client)
             reportgenerator.api.get_gantt_b64(gantt_list, show_gantt=True)
         sys.exit(0)
 
@@ -113,7 +117,7 @@ def main():
 
     # Else fetch data
     if args.which == 'collect':
-        logger.info('collection initiated')
+        logger.info('collection initiated!')
         generic_tasks = []
         if 'outlook' in args and args.outlook:
             try:
