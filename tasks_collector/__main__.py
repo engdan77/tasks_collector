@@ -74,10 +74,10 @@ def get_args():
 
 def main():
     global gui_disabled
-    gui_disabled = '--ignore_gooey' in sys.argv
+    gui_disabled = '--ignore-gooey' in sys.argv
     if gui_disabled:
-        args, default_db_path = get_args()
         logger.info('no gui')
+        args, default_db_path = get_args()
     else:
         logger.info('gui')
         # TODO: some tricky things need to be fixed to able to --ignore-gooey
