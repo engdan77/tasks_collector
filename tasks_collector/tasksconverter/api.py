@@ -137,6 +137,30 @@ def to_generic(tasks_list: List, _type='outlook') -> List:
                 close_date = modified_date
             if not due_date:
                 due_date = modified_date
+        elif _type == 'trello':
+            key = task['project']
+            subject = f'[{key}] {task["name"]}'
+            client = ''
+            category = None
+            status = 'open' if task['closed'] is False else 'close'
+            due_date = convert_date_attribute(task['due'])
+            start_date = dateparser.parse(task['dateLastActivity']) - timedelta(days=5)
+            if due_date:
+                start_date = (dateparser.parse(task['due']) - timedelta(days=5)).strftime('%Y-%m-%d')
+            else:
+                start_date = start_date.strftime('%Y-%m-%d')
+            if status == 'open':
+                close_date = None
+            else:
+                close_date = convert_date_attribute(task['dateLastActivity'])
+            modified_date = convert_date_attribute(task['dateLastActivity'])
+
+
+            # fix None dates
+            if not close_date and status == 'close':
+                close_date = modified_date
+            if not due_date:
+                due_date = modified_date
 
         generic_task = {'subject': subject,
                         'client': client,
