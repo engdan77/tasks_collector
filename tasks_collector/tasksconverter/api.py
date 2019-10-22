@@ -110,6 +110,7 @@ def to_generic(tasks_list: List, _type='outlook') -> List:
     generic_list = list()
     for task in tasks_list:
         if _type == 'outlook':
+            logger.debug('converting outlook to generic')
             subject = format_subject(task['taskName'], _type='outlook')
             categories = task['taskCategories']
             categories = parse_category(categories, _type='outlook')
@@ -123,6 +124,7 @@ def to_generic(tasks_list: List, _type='outlook') -> List:
             else:
                 status = 'open'
         elif _type == 'jira':
+            logger.debug('converting jira to generic')
             key = task.key
             subject = f'[{key}] {task.fields.summary}'
             client = task.fields.project.name
@@ -138,6 +140,7 @@ def to_generic(tasks_list: List, _type='outlook') -> List:
             if not due_date:
                 due_date = modified_date
         elif _type == 'trello':
+            logger.debug('converting trello to generic')
             key = task['project']
             subject = f'[{key}] {task["name"]}'
             client = ''
@@ -174,5 +177,6 @@ def to_generic(tasks_list: List, _type='outlook') -> List:
         generic_list.append(generic_task)
     # sort the list
     generic_list = sorted(generic_list, key=lambda x: (str(x['client']), str(x['category']), str(x['status'])))
+    logger.debug('complete converting to generic')
     return generic_list
 
