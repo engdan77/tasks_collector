@@ -77,6 +77,7 @@ def main():
     gui_disabled = '--ignore-gooey' in sys.argv
     if gui_disabled:
         logger.info('no gui')
+        sys.argv.remove('--ignore-gooey')
         args, default_db_path = get_args()
     else:
         logger.info('gui')

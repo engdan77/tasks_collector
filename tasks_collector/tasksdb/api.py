@@ -41,14 +41,13 @@ def get_default_db_path() -> str:
     p = globals().get('__package__')
     local_config_dir = next(iter([d / 'config' for d in list(Path(os.path.abspath(__file__)).parents)[:2] if (d / 'config').exists()]), None)
     if local_config_dir and local_config_dir.exists():
-        logger.info(f'found local config directory in {local_config_dir}')
+        logger.debug(f'found local config directory in {local_config_dir}')
         base_config_dir = local_config_dir
     else:
         base_config_dir = user_config_dir(p)
-        logger.info(f'no local config directory, creating settings in {base_config_dir}')
+        logger.debug(f'no local config directory, directory will be used {base_config_dir}')
     conf_path = Path(base_config_dir) / Path(f'{p}.sqlite')
     conf_path.parent.mkdir(parents=True, exist_ok=True)
-    logger.info(f"creating {conf_path}")
     return str(conf_path)
 
 
