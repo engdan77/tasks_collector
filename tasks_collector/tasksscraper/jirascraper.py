@@ -5,6 +5,7 @@
 __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
+import jira as j
 from jira import JIRA
 from logzero import logger
 from typing import List
@@ -25,7 +26,11 @@ def get_jira_tasks(host: str, username: str, jira_password: str, max_results: in
 
     """
     # options = {'server': 'https://cog-jira.ipsoft.com', 'basic_auth': ('dengvall', pwd)}
-    jira = JIRA(basic_auth=(username, jira_password), server=f'https://{host}')
+    try:
+        jira = JIRA(basic_auth=(username, jira_password), server=f'https://{host}')
+    except j.exceptions.JIRAError:
+        logger.error('Error connecting to server - please verify credentials')
+        raise
 
     # Get all projects
     # projects = jira.projects()

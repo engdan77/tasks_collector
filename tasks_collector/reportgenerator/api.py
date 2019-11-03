@@ -256,10 +256,11 @@ def create_gantt_chart(task_list: List,
     return gantt_b64
 
 
-def tasks_to_pastebin(generic_tasks: List, _filter: bool = False, show_gantt: bool = True, default_client=None) -> None:
+def tasks_to_pastebin(generic_tasks: List, _filter: bool = False, show_gantt: bool = True, default_client='None') -> None:
     """Creates tasks and inserted to pastebin
 
     Args:
+        default_client:
         generic_tasks:
         _filter:
         show_gantt:
@@ -286,7 +287,7 @@ def tasks_to_pastebin(generic_tasks: List, _filter: bool = False, show_gantt: bo
                                   default_client=default_client)
 
     # Render gantt
-    gantt_list = create_gantt_list(generic_tasks)
+    gantt_list = create_gantt_list(generic_tasks, default_client)
     gantt_b64 = get_gantt_b64(gantt_list, show_gantt)
     # Attach image
     email_html += '<img tasks_collector="data:image/png;base64,{}" alt="gantt.png">'.format(gantt_b64)
@@ -410,10 +411,11 @@ def create_concurrent_list(in_data: List,
     return plot_data
 
 
-def create_gantt_list(generic_tasks: List) -> List:
+def create_gantt_list(generic_tasks: List, default_client='None') -> List:
     """Creates a list formatting tasks names etc
 
     Args:
+        default_client:
         generic_tasks:
 
     Returns:

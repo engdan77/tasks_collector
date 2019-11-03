@@ -15,8 +15,9 @@ import applescript
 from tasks_collector import reportgenerator
 from tasks_collector.reportgenerator.api import filter_generic_tasks, tasks_to_pastebin, create_gantt_list
 from tasks_collector.tasksconverter.api import to_generic
-from tasks_collector.tasksdb.api import get_default_db_path, OpenDB
+from tasks_collector.tasksdb.api import get_default_db_path, insert_or_updates_tasks, OpenDB
 from tasks_collector.tasksscraper.jirascraper import get_jira_tasks
+from tasks_collector.tasksscraper.trelloscraper import get_trello_tasks
 import tasks_collector.tasksscraper.outlookscraper
 
 __author__ = "Daniel Engvall"
@@ -50,6 +51,7 @@ def get_args():
     collect_parser = subparsers.add_parser('collect')
     collect_parser.add_argument('--outlook', action='store_true')
     collect_parser.add_argument('--jira', help='username@jiraserver')
+    collect_parser.add_argument('--trello', help='api_key:token:token_secret:my_name')
     # collect_parser.add_argument('--sqlite_database', help='name of sqlite to export/update to', default=default_db_path, widget='FileChooser')
     collect_parser.add_argument(*db_args, **db_kwargs)
     collect_parser.add_argument('--loglevel', default='INFO', choices=['INFO', 'DEBUG'])
@@ -74,11 +76,16 @@ def get_args():
 
 def main():
     global gui_disabled
-    gui_disabled = '--ignore_gooey' in sys.argv
+    gui_disabled = '--ignore-gooey' in sys.argv
     if gui_disabled:
+        logger.info('no gui')
+        sys.argv.remove('--ignore-gooey')
         args, default_db_path = get_args()
     else:
-        return Gooey(get_args, program_name='Tasks Collector', navigation='TABBED', tabbed_groups=True)()
+        logger.info('gui')
+        # TODO: some tricky things need to be fixed to able to --ignore-gooey
+        return Gooey(get_args, program_name='Tasks Collector', navigation='TABBED')()
+
 
     logzero.loglevel(getattr(logging, args.loglevel))
     if 'sqlite_database' not in args.__dict__.keys():
@@ -98,7 +105,7 @@ def main():
         if args.copyq:
             tasks_to_pastebin(filtered_tasks, _filter=True, show_gantt=False, default_client=args.default_client)
         if args.show:
-            gantt_list = create_gantt_list(filtered_tasks)
+            gantt_list = create_gantt_list(filtered_tasks, args.default_client)
             reportgenerator.api.get_gantt_b64(gantt_list, show_gantt=True)
         sys.exit(0)
 
@@ -113,7 +120,7 @@ def main():
 
     # Else fetch data
     if args.which == 'collect':
-        logger.info('collection initiated')
+        logger.info('collection initiated!')
         generic_tasks = []
         if 'outlook' in args and args.outlook:
             try:
@@ -130,6 +137,13 @@ def main():
             jira_tasks = get_jira_tasks(host, username, password)
             jira_generic_tasks = to_generic(jira_tasks, _type='jira')
             generic_tasks.extend(jira_generic_tasks)
+
+        if 'trello' in args and args.trello:
+            api_key, token, token_secret, my_name = args.trello.split(':')
+            trello_tasks = get_trello_tasks(api_key, token, token_secret, my_name)
+            trello_generic_tasks = to_generic(trello_tasks, _type='trello')
+            generic_tasks.extend(trello_generic_tasks)
+
         insert_or_updates_tasks(generic_tasks)
 
 
