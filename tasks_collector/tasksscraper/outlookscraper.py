@@ -51,6 +51,6 @@ def get_outlook_tasks() -> List:
     	taskList
     end tell
     end getTasks
-    ''')
+    ''')  # nopep8
     outlook_tasks = scpt.call('getTasks')
     return outlook_tasks

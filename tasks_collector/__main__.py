@@ -78,7 +78,7 @@ def main():
     if gui_disabled:
         args, default_db_path = get_args()
     else:
-        return Gooey(get_args, program_name='Tasks Collector', navigation='TABBED')()
+        return Gooey(get_args, program_name='Tasks Collector', navigation='TABBED', tabbed_groups=True)()
 
     logzero.loglevel(getattr(logging, args.loglevel))
     if 'sqlite_database' not in args.__dict__.keys():
