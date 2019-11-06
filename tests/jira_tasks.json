@@ -1,426 +1,414 @@
 [
   {
-    "raw": {
-      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
-      "id": "64034",
-      "self": "https://jira.xxx.com/rest/api/2/issue/64034",
-      "key": "SEB-656",
-      "fields": {
-        "issuetype": {
-          "self": "https://jira.xxx.com/rest/api/2/issuetype/10002",
-          "id": "10002",
-          "description": "A task that needs to be done.",
-          "iconUrl": "https://jira.xxx.com/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
-          "name": "Task",
-          "subtask": false,
-          "avatarId": 10318
-        },
-        "timespent": null,
-        "project": {
-          "self": "https://jira.xxx.com/rest/api/2/project/10106",
-          "id": "10106",
-          "key": "SEB",
-          "name": "SEB",
-          "avatarUrls": {
-            "48x48": "https://jira.xxx.com/secure/projectavatar?avatarId=10324",
-            "24x24": "https://jira.xxx.com/secure/projectavatar?size=small&avatarId=10324",
-            "16x16": "https://jira.xxx.com/secure/projectavatar?size=xsmall&avatarId=10324",
-            "32x32": "https://jira.xxx.com/secure/projectavatar?size=medium&avatarId=10324"
-          },
-          "projectCategory": {
-            "self": "https://jira.xxx.com/rest/api/2/projectCategory/10000",
-            "id": "10000",
-            "description": "Client Pilots for Amelia",
-            "name": "Pilot"
-          }
-        },
-        "fixVersions": [
-          
-        ],
-        "aggregatetimespent": null,
-        "resolution": {
-          "self": "https://jira.xxx.com/rest/api/2/resolution/10000",
-          "id": "10000",
-          "description": "Work has been completed on this issue.",
-          "name": "Done"
-        },
-        "customfield_10500": "{}",
-        "customfield_10700": null,
-        "customfield_10701": null,
-        "customfield_10702": null,
-        "customfield_10703": null,
-        "customfield_10704": null,
-        "resolutiondate": "2018-11-15T11:12:16.000+0000",
-        "customfield_10705": null,
-        "customfield_10706": null,
-        "customfield_10707": null,
-        "workratio": -1,
-        "customfield_10709": null,
-        "lastViewed": null,
-        "watches": {
-          "self": "https://jira.xxx.com/rest/api/2/issue/SEB-656/watchers",
-          "watchCount": 1,
-          "isWatching": true
-        },
-        "created": "2018-11-15T10:35:06.000+0000",
-        "priority": {
-          "self": "https://jira.xxx.com/rest/api/2/priority/1",
-          "iconUrl": "https://jira.xxx.com/images/icons/priorities/highest.svg",
-          "name": "Urgent",
-          "id": "1"
-        },
-        "customfield_10100": null,
-        "labels": [
-          
-        ],
-        "customfield_10731": null,
-        "timeestimate": null,
-        "aggregatetimeoriginalestimate": null,
-        "versions": [
-          
-        ],
-        "issuelinks": [
-          
-        ],
-        "assignee": {
-          "self": "https://jira.xxx.com/rest/api/2/user?username=xxx",
-          "name": "xxx",
-          "key": "xxx",
-          "emailAddress": "Daniel.Engvall@xxx.com",
-          "avatarUrls": {
-            "48x48": "https://jira.xxx.com/secure/useravatar?ownerId=xxx&avatarId=10814",
-            "24x24": "https://jira.xxx.com/secure/useravatar?size=small&ownerId=xxx&avatarId=10814",
-            "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&ownerId=xxx&avatarId=10814",
-            "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&ownerId=xxx&avatarId=10814"
-          },
-          "displayName": "Daniel Engvall",
-          "active": true,
-          "timeZone": "GMT"
-        },
-        "updated": "2018-11-15T11:12:16.000+0000",
-        "status": {
-          "self": "https://jira.xxx.com/rest/api/2/status/10001",
-          "description": "",
-          "iconUrl": "https://jira.xxx.com/",
-          "name": "Done",
-          "id": "10001",
-          "statusCategory": {
-            "self": "https://jira.xxx.com/rest/api/2/statuscategory/3",
-            "id": 3,
-            "key": "done",
-            "colorName": "green",
-            "name": "Done"
-          }
-        },
-        "components": [
-          
-        ],
-        "timeoriginalestimate": null,
-        "description": null,
-        "customfield_10730": null,
-        "customfield_10720": null,
-        "customfield_10006": null,
-        "customfield_10600": null,
-        "customfield_10721": null,
-        "customfield_10007": null,
-        "customfield_10601": null,
-        "customfield_10722": null,
-        "customfield_10602": null,
-        "customfield_10723": null,
-        "customfield_10603": null,
-        "customfield_10724": null,
-        "aggregatetimeestimate": null,
-        "customfield_10604": null,
-        "customfield_10725": null,
-        "customfield_10726": null,
-        "customfield_10727": null,
-        "customfield_10728": null,
-        "customfield_10729": null,
-        "summary": "Helping Justinas with escalations after HelpOnline-Dev upgrade to 3.5",
-        "creator": {
-          "self": "https://jira.xxx.com/rest/api/2/user?username=xxx",
-          "name": "xxx",
-          "key": "xxx",
-          "emailAddress": "Daniel.Engvall@xxx.com",
-          "avatarUrls": {
-            "48x48": "https://jira.xxx.com/secure/useravatar?ownerId=xxx&avatarId=10814",
-            "24x24": "https://jira.xxx.com/secure/useravatar?size=small&ownerId=xxx&avatarId=10814",
-            "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&ownerId=xxx&avatarId=10814",
-            "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&ownerId=xxx&avatarId=10814"
-          },
-          "displayName": "Daniel Engvall",
-          "active": true,
-          "timeZone": "GMT"
-        },
-        "subtasks": [
-          
-        ],
-        "reporter": {
-          "self": "https://jira.xxx.com/rest/api/2/user?username=xxx",
-          "name": "xxx",
-          "key": "xxx",
-          "emailAddress": "Daniel.Engvall@xxx.com",
-          "avatarUrls": {
-            "48x48": "https://jira.xxx.com/secure/useravatar?ownerId=xxx&avatarId=10814",
-            "24x24": "https://jira.xxx.com/secure/useravatar?size=small&ownerId=xxx&avatarId=10814",
-            "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&ownerId=xxx&avatarId=10814",
-            "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&ownerId=xxx&avatarId=10814"
-          },
-          "displayName": "Daniel Engvall",
-          "active": true,
-          "timeZone": "GMT"
-        },
-        "customfield_10000": "1|i03fv3:",
-        "aggregateprogress": {
-          "progress": 0,
-          "total": 0
-        },
-        "customfield_10001": [
-          "com.atlassian.greenhopper.service.sprint.Sprint@3ec189c5[id=1445,rapidViewId=456,state=CLOSED,name=Sprint 6.11-21.11,startDate=2018-11-06T10:13:27.983Z,endDate=2018-11-21T10:13:00.000Z,completeDate=2018-11-21T12:15:14.849Z,sequence=1445,goal=]"
-        ],
-        "customfield_10002": null,
-        "customfield_10200": null,
-        "customfield_10201": null,
-        "customfield_10202": null,
-        "customfield_10400": null,
-        "customfield_10710": null,
-        "environment": null,
-        "customfield_10711": null,
-        "customfield_10712": null,
-        "customfield_10713": null,
-        "customfield_10714": null,
-        "duedate": null,
-        "customfield_10715": null,
-        "customfield_10716": null,
-        "customfield_10717": null,
-        "customfield_10718": null,
-        "progress": {
-          "progress": 0,
-          "total": 0
-        },
-        "customfield_10719": null,
-        "votes": {
-          "self": "https://jira.xxx.com/rest/api/2/issue/SEB-656/votes",
-          "votes": 0,
-          "hasVoted": false
-        }
-      }
-    },
-    "id": "64034",
-    "key": "XXX-656",
     "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
-    "self": "https://jira.xxx.com/rest/api/2/issue/64034"
+    "id": "64034",
+    "self": "https://jira.xxx.com/rest/api/2/issue/64034",
+    "key": "xxx-656",
+    "fields": {
+      "issuetype": {
+        "self": "https://jira.xxx.com/rest/api/2/issuetype/10002",
+        "id": "10002",
+        "description": "A task that needs to be done.",
+        "iconUrl": "https://jira.xxx.com/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
+        "name": "Task",
+        "subtask": false,
+        "avatarId": 10318
+      },
+      "timespent": null,
+      "project": {
+        "self": "https://jira.xxx.com/rest/api/2/project/10106",
+        "id": "10106",
+        "key": "xxx",
+        "name": "xxx",
+        "avatarUrls": {
+          "48x48": "https://jira.xxx.com/secure/projectavatar?avatarId=10324",
+          "24x24": "https://jira.xxx.com/secure/projectavatar?size=small&avatarId=10324",
+          "16x16": "https://jira.xxx.com/secure/projectavatar?size=xsmall&avatarId=10324",
+          "32x32": "https://jira.xxx.com/secure/projectavatar?size=medium&avatarId=10324"
+        },
+        "projectCategory": {
+          "self": "https://jira.xxx.com/rest/api/2/projectCategory/10000",
+          "id": "10000",
+          "description": "Client Pilots for Amelia",
+          "name": "Pilot"
+        }
+      },
+      "fixVersions": [
+
+      ],
+      "aggregatetimespent": null,
+      "resolution": {
+        "self": "https://jira.xxx.com/rest/api/2/resolution/10000",
+        "id": "10000",
+        "description": "Work has been completed on this issue.",
+        "name": "Done"
+      },
+      "customfield_10500": "{}",
+      "customfield_10700": null,
+      "customfield_10701": null,
+      "customfield_10702": null,
+      "customfield_10703": null,
+      "customfield_10704": null,
+      "resolutiondate": "2018-11-15T11:12:16.000+0000",
+      "customfield_10705": null,
+      "customfield_10706": null,
+      "customfield_10707": null,
+      "workratio": -1,
+      "customfield_10709": null,
+      "lastViewed": null,
+      "watches": {
+        "self": "https://jira.xxx.com/rest/api/2/issue/xxx-656/watchers",
+        "watchCount": 1,
+        "isWatching": true
+      },
+      "created": "2018-11-15T10:35:06.000+0000",
+      "priority": {
+        "self": "https://jira.xxx.com/rest/api/2/priority/1",
+        "iconUrl": "https://jira.xxx.com/images/icons/priorities/highest.svg",
+        "name": "Urgent",
+        "id": "1"
+      },
+      "customfield_10100": null,
+      "labels": [
+
+      ],
+      "customfield_10731": null,
+      "timeestimate": null,
+      "aggregatetimeoriginalestimate": null,
+      "versions": [
+
+      ],
+      "issuelinks": [
+
+      ],
+      "assignee": {
+        "self": "https://jira.xxx.com/rest/api/2/user?username=xxx",
+        "name": "xxx",
+        "key": "xxx",
+        "emailAddress": "Daniel.Engvall@xxx.com",
+        "avatarUrls": {
+          "48x48": "https://jira.xxx.com/secure/useravatar?ownerId=xxx&avatarId=10814",
+          "24x24": "https://jira.xxx.com/secure/useravatar?size=small&ownerId=xxx&avatarId=10814",
+          "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&ownerId=xxx&avatarId=10814",
+          "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&ownerId=xxx&avatarId=10814"
+        },
+        "displayName": "Daniel Engvall",
+        "active": true,
+        "timeZone": "GMT"
+      },
+      "updated": "2018-11-15T11:12:16.000+0000",
+      "status": {
+        "self": "https://jira.xxx.com/rest/api/2/status/10001",
+        "description": "",
+        "iconUrl": "https://jira.xxx.com/",
+        "name": "Done",
+        "id": "10001",
+        "statusCategory": {
+          "self": "https://jira.xxx.com/rest/api/2/statuscategory/3",
+          "id": 3,
+          "key": "done",
+          "colorName": "green",
+          "name": "Done"
+        }
+      },
+      "components": [
+
+      ],
+      "timeoriginalestimate": null,
+      "description": null,
+      "customfield_10730": null,
+      "customfield_10720": null,
+      "customfield_10006": null,
+      "customfield_10600": null,
+      "customfield_10721": null,
+      "customfield_10007": null,
+      "customfield_10601": null,
+      "customfield_10722": null,
+      "customfield_10602": null,
+      "customfield_10723": null,
+      "customfield_10603": null,
+      "customfield_10724": null,
+      "aggregatetimeestimate": null,
+      "customfield_10604": null,
+      "customfield_10725": null,
+      "customfield_10726": null,
+      "customfield_10727": null,
+      "customfield_10728": null,
+      "customfield_10729": null,
+      "summary": "Helping xxx with escalations after xxx-Dev upgrade to 3.5",
+      "creator": {
+        "self": "https://jira.xxx.com/rest/api/2/user?username=xxx",
+        "name": "xxx",
+        "key": "xxx",
+        "emailAddress": "Daniel.Engvall@xxx.com",
+        "avatarUrls": {
+          "48x48": "https://jira.xxx.com/secure/useravatar?ownerId=xxx&avatarId=10814",
+          "24x24": "https://jira.xxx.com/secure/useravatar?size=small&ownerId=xxx&avatarId=10814",
+          "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&ownerId=xxx&avatarId=10814",
+          "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&ownerId=xxx&avatarId=10814"
+        },
+        "displayName": "Daniel Engvall",
+        "active": true,
+        "timeZone": "GMT"
+      },
+      "subtasks": [
+
+      ],
+      "reporter": {
+        "self": "https://jira.xxx.com/rest/api/2/user?username=xxx",
+        "name": "xxx",
+        "key": "xxx",
+        "emailAddress": "Daniel.Engvall@xxx.com",
+        "avatarUrls": {
+          "48x48": "https://jira.xxx.com/secure/useravatar?ownerId=xxx&avatarId=10814",
+          "24x24": "https://jira.xxx.com/secure/useravatar?size=small&ownerId=xxx&avatarId=10814",
+          "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&ownerId=xxx&avatarId=10814",
+          "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&ownerId=xxx&avatarId=10814"
+        },
+        "displayName": "Daniel Engvall",
+        "active": true,
+        "timeZone": "GMT"
+      },
+      "customfield_10000": "1|i03fv3:",
+      "aggregateprogress": {
+        "progress": 0,
+        "total": 0
+      },
+      "customfield_10001": [
+        "com.atlassian.greenhopper.service.sprint.Sprint@3ec189c5[id=1445,rapidViewId=456,state=CLOSED,name=Sprint 6.11-21.11,startDate=2018-11-06T10:13:27.983Z,endDate=2018-11-21T10:13:00.000Z,completeDate=2018-11-21T12:15:14.849Z,sequence=1445,goal=]"
+      ],
+      "customfield_10002": null,
+      "customfield_10200": null,
+      "customfield_10201": null,
+      "customfield_10202": null,
+      "customfield_10400": null,
+      "customfield_10710": null,
+      "environment": null,
+      "customfield_10711": null,
+      "customfield_10712": null,
+      "customfield_10713": null,
+      "customfield_10714": null,
+      "duedate": null,
+      "customfield_10715": null,
+      "customfield_10716": null,
+      "customfield_10717": null,
+      "customfield_10718": null,
+      "progress": {
+        "progress": 0,
+        "total": 0
+      },
+      "customfield_10719": null,
+      "votes": {
+        "self": "https://jira.xxx.com/rest/api/2/issue/xxx-656/votes",
+        "votes": 0,
+        "hasVoted": false
+      }
+    }
   },
   {
-    "raw": {
-      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
-      "id": "70755",
-      "self": "https://jira.xxx.com/rest/api/2/issue/70755",
-      "key": "AMMP22019-171",
-      "fields": {
-        "issuetype": {
-          "self": "https://jira.xxx.com/rest/api/2/issuetype/10100",
-          "id": "10100",
-          "description": "An improvement or enhancement to an existing feature or task.",
-          "iconUrl": "https://jira.xxx.com/secure/viewavatar?size=xsmall&avatarId=10310&avatarType=issuetype",
-          "name": "Improvement",
-          "subtask": false,
-          "avatarId": 10310
-        },
-        "timespent": null,
-        "project": {
-          "self": "https://jira.xxx.com/rest/api/2/project/11024",
-          "id": "11024",
-          "key": "AMMP22019",
-          "name": "Amelia MP2019",
-          "avatarUrls": {
-            "48x48": "https://jira.xxx.com/secure/projectavatar?avatarId=10324",
-            "24x24": "https://jira.xxx.com/secure/projectavatar?size=small&avatarId=10324",
-            "16x16": "https://jira.xxx.com/secure/projectavatar?size=xsmall&avatarId=10324",
-            "32x32": "https://jira.xxx.com/secure/projectavatar?size=medium&avatarId=10324"
-          },
-          "projectCategory": {
-            "self": "https://jira.xxx.com/rest/api/2/projectCategory/10101",
-            "id": "10101",
-            "description": "Internal",
-            "name": "Internal"
-          }
-        },
-        "fixVersions": [
-          
-        ],
-        "aggregatetimespent": null,
-        "resolution": {
-          "self": "https://jira.xxx.com/rest/api/2/resolution/10000",
-          "id": "10000",
-          "description": "Work has been completed on this issue.",
-          "name": "Done"
-        },
-        "customfield_10500": "{summaryBean=com.atlassian.jira.plugin.devstatus.rest.SummaryBean@75d30420[summary={pullrequest=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@62202a12[overall=PullRequestOverallBean{stateCount=0, state='OPEN', details=PullRequestOverallDetails{openCount=0, mergedCount=0, declinedCount=0}},byInstanceType={}], build=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@495f73a9[overall=com.atlassian.jira.plugin.devstatus.summary.beans.BuildOverallBean@2a4ca02a[failedBuildCount=0,successfulBuildCount=0,unknownBuildCount=0,count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}], review=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@6b4d3c78[overall=com.atlassian.jira.plugin.devstatus.summary.beans.ReviewsOverallBean@4b25c0bd[stateCount=0,state=<null>,dueDate=<null>,overDue=false,count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}], deployment-environment=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@79d5204b[overall=com.atlassian.jira.plugin.devstatus.summary.beans.DeploymentOverallBean@365782ab[topEnvironments=[],showProjects=false,successfulCount=0,count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}], repository=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@347bd6e5[overall=com.atlassian.jira.plugin.devstatus.summary.beans.CommitOverallBean@51bec8ff[count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}], branch=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@1396dfb[overall=com.atlassian.jira.plugin.devstatus.summary.beans.BranchOverallBean@bf1f5ad[count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}]},errors=[],configErrors=[]], devSummaryJson={\"cachedValue\":{\"errors\":[],\"configErrors\":[],\"summary\":{\"pullrequest\":{\"overall\":{\"count\":0,\"lastUpdated\":null,\"stateCount\":0,\"state\":\"OPEN\",\"details\":{\"openCount\":0,\"mergedCount\":0,\"declinedCount\":0,\"total\":0},\"open\":true},\"byInstanceType\":{}},\"build\":{\"overall\":{\"count\":0,\"lastUpdated\":null,\"failedBuildCount\":0,\"successfulBuildCount\":0,\"unknownBuildCount\":0},\"byInstanceType\":{}},\"review\":{\"overall\":{\"count\":0,\"lastUpdated\":null,\"stateCount\":0,\"state\":null,\"dueDate\":null,\"overDue\":false,\"completed\":false},\"byInstanceType\":{}},\"deployment-environment\":{\"overall\":{\"count\":0,\"lastUpdated\":null,\"topEnvironments\":[],\"showProjects\":false,\"successfulCount\":0},\"byInstanceType\":{}},\"repository\":{\"overall\":{\"count\":0,\"lastUpdated\":null},\"byInstanceType\":{}},\"branch\":{\"overall\":{\"count\":0,\"lastUpdated\":null},\"byInstanceType\":{}}}},\"isStale\":false}}",
-        "customfield_10700": null,
-        "customfield_10701": null,
-        "customfield_10702": null,
-        "customfield_10703": null,
-        "customfield_10704": null,
-        "resolutiondate": "2019-04-01T13:10:49.000+0000",
-        "customfield_10705": null,
-        "customfield_10706": null,
-        "customfield_10707": null,
-        "workratio": -1,
-        "customfield_10709": null,
-        "lastViewed": null,
-        "watches": {
-          "self": "https://jira.xxx.com/rest/api/2/issue/AMMP22019-171/watchers",
-          "watchCount": 2,
-          "isWatching": false
-        },
-        "created": "2019-03-24T18:30:51.000+0000",
-        "priority": {
-          "self": "https://jira.xxx.com/rest/api/2/priority/2",
-          "iconUrl": "https://jira.xxx.com/images/icons/priorities/high.svg",
-          "name": "High",
-          "id": "2"
-        },
-        "customfield_10100": null,
-        "labels": [
-          
-        ],
-        "customfield_10731": null,
-        "timeestimate": null,
-        "aggregatetimeoriginalestimate": null,
-        "versions": [
-          
-        ],
-        "issuelinks": [
-          
-        ],
-        "assignee": {
-          "self": "https://jira.xxx.com/rest/api/2/user?username=xxx",
-          "name": "xxx",
-          "key": "xxx",
-          "emailAddress": "Daniel.Engvall@xxx.com",
-          "avatarUrls": {
-            "48x48": "https://jira.xxx.com/secure/useravatar?ownerId=xxx&avatarId=10814",
-            "24x24": "https://jira.xxx.com/secure/useravatar?size=small&ownerId=xxx&avatarId=10814",
-            "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&ownerId=xxx&avatarId=10814",
-            "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&ownerId=xxx&avatarId=10814"
-          },
-          "displayName": "Daniel Engvall",
-          "active": true,
-          "timeZone": "GMT"
-        },
-        "updated": "2019-04-01T13:10:49.000+0000",
-        "status": {
-          "self": "https://jira.xxx.com/rest/api/2/status/10415",
-          "description": "No Longer a valid requirement",
-          "iconUrl": "https://jira.xxx.com/images/icons/statuses/generic.png",
-          "name": "Not in Scope",
-          "id": "10415",
-          "statusCategory": {
-            "self": "https://jira.xxx.com/rest/api/2/statuscategory/3",
-            "id": 3,
-            "key": "done",
-            "colorName": "green",
-            "name": "Done"
-          }
-        },
-        "components": [
-          
-        ],
-        "timeoriginalestimate": null,
-        "description": "I was  “Anonymous user” and naturally Amelia does not know who I am, and did not send the email..\r\nPlease discuss this with Daniel and Esther, I would take out the email reference and add something like: “Please take a note of the ticket number”…\r\n\r\n \r\n\r\n-------------\r\n\r\n \r\n\r\nAlright. I will file this for you.\r\n\r\nTitle:\r\n\r\n*Outlook issues1*\r\n\r\n \r\n\r\nDescription:\r\n *Outlook - Credentials Issue1*\r\n\r\n \r\n\r\nUrgency:\r\n *Medium*\r\n\r\nCan you confirm this is correct or would you like to edit something?\r\n\r\nAmelia | 5:59:17 PM\r\n\r\nYes, confirm\r\n\r\n| 5:59:22 PM\r\n\r\nCreating ticket...\r\n\r\nDone! Ticket INC0056882 has been created. {color:#d04437}*I have also sent you an email for your record.*{color} You can come back any time to update the ticket or check the status.\r\n\r\nIn order to constantly improve this service, I really would appreciate your feedback.\r\n\r\nHow did you enjoy this conversation with me?\r\n\r\n \r\n\r\n \r\n\r\n \r\n\r\n ",
-        "customfield_10730": null,
-        "customfield_10720": null,
-        "customfield_10006": null,
-        "customfield_10600": null,
-        "customfield_10721": null,
-        "customfield_10007": null,
-        "customfield_10601": null,
-        "customfield_10722": null,
-        "customfield_10602": null,
-        "customfield_10723": null,
-        "customfield_10603": null,
-        "customfield_10724": null,
-        "aggregatetimeestimate": null,
-        "customfield_10604": null,
-        "customfield_10725": null,
-        "customfield_10726": null,
-        "customfield_10727": null,
-        "customfield_10728": null,
-        "customfield_10729": null,
-        "summary": "Unsent Emails while ANONYMOUS",
-        "creator": {
-          "self": "https://jira.xxx.com/rest/api/2/user?username=estoianova",
-          "name": "estoianova",
-          "key": "estoianova",
-          "emailAddress": "Ekaterina.Stoianova@xxx.com",
-          "avatarUrls": {
-            "48x48": "https://jira.xxx.com/secure/useravatar?avatarId=10337",
-            "24x24": "https://jira.xxx.com/secure/useravatar?size=small&avatarId=10337",
-            "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&avatarId=10337",
-            "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&avatarId=10337"
-          },
-          "displayName": "Ekaterina Stoianova",
-          "active": true,
-          "timeZone": "Europe/Berlin"
-        },
-        "subtasks": [
-          
-        ],
-        "reporter": {
-          "self": "https://jira.xxx.com/rest/api/2/user?username=estoianova",
-          "name": "estoianova",
-          "key": "estoianova",
-          "emailAddress": "Ekaterina.Stoianova@xxx.com",
-          "avatarUrls": {
-            "48x48": "https://jira.xxx.com/secure/useravatar?avatarId=10337",
-            "24x24": "https://jira.xxx.com/secure/useravatar?size=small&avatarId=10337",
-            "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&avatarId=10337",
-            "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&avatarId=10337"
-          },
-          "displayName": "Ekaterina Stoianova",
-          "active": true,
-          "timeZone": "Europe/Berlin"
-        },
-        "customfield_10000": "1|hzuz5z:0b",
-        "aggregateprogress": {
-          "progress": 0,
-          "total": 0
-        },
-        "customfield_10001": [
-          "com.atlassian.greenhopper.service.sprint.Sprint@553855be[id=1631,rapidViewId=547,state=ACTIVE,name=Amelia MP Sprint 7,startDate=2019-04-01T13:03:20.396Z,endDate=2019-04-15T13:03:00.000Z,completeDate=<null>,sequence=1631,goal=Finish 3 Skills Test feedback fixes.]"
-        ],
-        "customfield_10002": null,
-        "customfield_10200": null,
-        "customfield_10201": null,
-        "customfield_10202": null,
-        "customfield_10400": null,
-        "customfield_10710": null,
-        "environment": null,
-        "customfield_10711": null,
-        "customfield_10712": null,
-        "customfield_10713": null,
-        "customfield_10714": null,
-        "duedate": null,
-        "customfield_10715": null,
-        "customfield_10716": null,
-        "customfield_10717": null,
-        "customfield_10718": null,
-        "progress": {
-          "progress": 0,
-          "total": 0
-        },
-        "customfield_10719": null,
-        "votes": {
-          "self": "https://jira.xxx.com/rest/api/2/issue/AMMP22019-171/votes",
-          "votes": 0,
-          "hasVoted": false
-        }
-      }
-    },
-    "id": "70755",
-    "key": "AMMP22019-171",
     "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
-    "self": "https://jira.xxx.com/rest/api/2/issue/70755"
+    "id": "70755",
+    "self": "https://jira.xxx.com/rest/api/2/issue/70755",
+    "key": "AMMP22019-171",
+    "fields": {
+      "issuetype": {
+        "self": "https://jira.xxx.com/rest/api/2/issuetype/10100",
+        "id": "10100",
+        "description": "An improvement or enhancement to an existing feature or task.",
+        "iconUrl": "https://jira.xxx.com/secure/viewavatar?size=xsmall&avatarId=10310&avatarType=issuetype",
+        "name": "Improvement",
+        "subtask": false,
+        "avatarId": 10310
+      },
+      "timespent": null,
+      "project": {
+        "self": "https://jira.xxx.com/rest/api/2/project/11024",
+        "id": "11024",
+        "key": "AMMP22019",
+        "name": "Amelia MP2019",
+        "avatarUrls": {
+          "48x48": "https://jira.xxx.com/secure/projectavatar?avatarId=10324",
+          "24x24": "https://jira.xxx.com/secure/projectavatar?size=small&avatarId=10324",
+          "16x16": "https://jira.xxx.com/secure/projectavatar?size=xsmall&avatarId=10324",
+          "32x32": "https://jira.xxx.com/secure/projectavatar?size=medium&avatarId=10324"
+        },
+        "projectCategory": {
+          "self": "https://jira.xxx.com/rest/api/2/projectCategory/10101",
+          "id": "10101",
+          "description": "Internal",
+          "name": "Internal"
+        }
+      },
+      "fixVersions": [
+
+      ],
+      "aggregatetimespent": null,
+      "resolution": {
+        "self": "https://jira.xxx.com/rest/api/2/resolution/10000",
+        "id": "10000",
+        "description": "Work has been completed on this issue.",
+        "name": "Done"
+      },
+      "customfield_10500": "{summaryBean=com.atlassian.jira.plugin.devstatus.rest.SummaryBean@75d30420[summary={pullrequest=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@62202a12[overall=PullRequestOverallBean{stateCount=0, state='OPEN', details=PullRequestOverallDetails{openCount=0, mergedCount=0, declinedCount=0}},byInstanceType={}], build=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@495f73a9[overall=com.atlassian.jira.plugin.devstatus.summary.beans.BuildOverallBean@2a4ca02a[failedBuildCount=0,successfulBuildCount=0,unknownBuildCount=0,count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}], review=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@6b4d3c78[overall=com.atlassian.jira.plugin.devstatus.summary.beans.ReviewsOverallBean@4b25c0bd[stateCount=0,state=<null>,dueDate=<null>,overDue=false,count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}], deployment-environment=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@79d5204b[overall=com.atlassian.jira.plugin.devstatus.summary.beans.DeploymentOverallBean@365782ab[topEnvironments=[],showProjects=false,successfulCount=0,count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}], repository=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@347bd6e5[overall=com.atlassian.jira.plugin.devstatus.summary.beans.CommitOverallBean@51bec8ff[count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}], branch=com.atlassian.jira.plugin.devstatus.rest.SummaryItemBean@1396dfb[overall=com.atlassian.jira.plugin.devstatus.summary.beans.BranchOverallBean@bf1f5ad[count=0,lastUpdated=<null>,lastUpdatedTimestamp=<null>],byInstanceType={}]},errors=[],configErrors=[]], devSummaryJson={\"cachedValue\":{\"errors\":[],\"configErrors\":[],\"summary\":{\"pullrequest\":{\"overall\":{\"count\":0,\"lastUpdated\":null,\"stateCount\":0,\"state\":\"OPEN\",\"details\":{\"openCount\":0,\"mergedCount\":0,\"declinedCount\":0,\"total\":0},\"open\":true},\"byInstanceType\":{}},\"build\":{\"overall\":{\"count\":0,\"lastUpdated\":null,\"failedBuildCount\":0,\"successfulBuildCount\":0,\"unknownBuildCount\":0},\"byInstanceType\":{}},\"review\":{\"overall\":{\"count\":0,\"lastUpdated\":null,\"stateCount\":0,\"state\":null,\"dueDate\":null,\"overDue\":false,\"completed\":false},\"byInstanceType\":{}},\"deployment-environment\":{\"overall\":{\"count\":0,\"lastUpdated\":null,\"topEnvironments\":[],\"showProjects\":false,\"successfulCount\":0},\"byInstanceType\":{}},\"repository\":{\"overall\":{\"count\":0,\"lastUpdated\":null},\"byInstanceType\":{}},\"branch\":{\"overall\":{\"count\":0,\"lastUpdated\":null},\"byInstanceType\":{}}}},\"isStale\":false}}",
+      "customfield_10700": null,
+      "customfield_10701": null,
+      "customfield_10702": null,
+      "customfield_10703": null,
+      "customfield_10704": null,
+      "resolutiondate": "2019-04-01T13:10:49.000+0000",
+      "customfield_10705": null,
+      "customfield_10706": null,
+      "customfield_10707": null,
+      "workratio": -1,
+      "customfield_10709": null,
+      "lastViewed": null,
+      "watches": {
+        "self": "https://jira.xxx.com/rest/api/2/issue/AMMP22019-171/watchers",
+        "watchCount": 2,
+        "isWatching": false
+      },
+      "created": "2019-03-24T18:30:51.000+0000",
+      "priority": {
+        "self": "https://jira.xxx.com/rest/api/2/priority/2",
+        "iconUrl": "https://jira.xxx.com/images/icons/priorities/high.svg",
+        "name": "High",
+        "id": "2"
+      },
+      "customfield_10100": null,
+      "labels": [
+
+      ],
+      "customfield_10731": null,
+      "timeestimate": null,
+      "aggregatetimeoriginalestimate": null,
+      "versions": [
+
+      ],
+      "issuelinks": [
+
+      ],
+      "assignee": {
+        "self": "https://jira.xxx.com/rest/api/2/user?username=xxx",
+        "name": "xxx",
+        "key": "xxx",
+        "emailAddress": "Daniel.Engvall@xxx.com",
+        "avatarUrls": {
+          "48x48": "https://jira.xxx.com/secure/useravatar?ownerId=xxx&avatarId=10814",
+          "24x24": "https://jira.xxx.com/secure/useravatar?size=small&ownerId=xxx&avatarId=10814",
+          "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&ownerId=xxx&avatarId=10814",
+          "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&ownerId=xxx&avatarId=10814"
+        },
+        "displayName": "Daniel Engvall",
+        "active": true,
+        "timeZone": "GMT"
+      },
+      "updated": "2019-04-01T13:10:49.000+0000",
+      "status": {
+        "self": "https://jira.xxx.com/rest/api/2/status/10415",
+        "description": "No Longer a valid requirement",
+        "iconUrl": "https://jira.xxx.com/images/icons/statuses/generic.png",
+        "name": "Not in Scope",
+        "id": "10415",
+        "statusCategory": {
+          "self": "https://jira.xxx.com/rest/api/2/statuscategory/3",
+          "id": 3,
+          "key": "done",
+          "colorName": "green",
+          "name": "Done"
+        }
+      },
+      "components": [
+
+      ],
+      "timeoriginalestimate": null,
+      "description": "I was  “Anonymous user” and naturally Amelia does not know who I am, and did not send the email..\r\nPlease discuss this with Daniel and Esther, I would take out the email reference and add something like: “Please take a note of the ticket number”…\r\n\r\n \r\n\r\n-------------\r\n\r\n \r\n\r\nAlright. I will file this for you.\r\n\r\nTitle:\r\n\r\n*Outlook issues1*\r\n\r\n \r\n\r\nDescription:\r\n *Outlook - Credentials Issue1*\r\n\r\n \r\n\r\nUrgency:\r\n *Medium*\r\n\r\nCan you confirm this is correct or would you like to edit something?\r\n\r\nAmelia | 5:59:17 PM\r\n\r\nYes, confirm\r\n\r\n| 5:59:22 PM\r\n\r\nCreating ticket...\r\n\r\nDone! Ticket INC0056882 has been created. {color:#d04437}*I have also sent you an email for your record.*{color} You can come back any time to update the ticket or check the status.\r\n\r\nIn order to constantly improve this service, I really would appreciate your feedback.\r\n\r\nHow did you enjoy this conversation with me?\r\n\r\n \r\n\r\n \r\n\r\n \r\n\r\n ",
+      "customfield_10730": null,
+      "customfield_10720": null,
+      "customfield_10006": null,
+      "customfield_10600": null,
+      "customfield_10721": null,
+      "customfield_10007": null,
+      "customfield_10601": null,
+      "customfield_10722": null,
+      "customfield_10602": null,
+      "customfield_10723": null,
+      "customfield_10603": null,
+      "customfield_10724": null,
+      "aggregatetimeestimate": null,
+      "customfield_10604": null,
+      "customfield_10725": null,
+      "customfield_10726": null,
+      "customfield_10727": null,
+      "customfield_10728": null,
+      "customfield_10729": null,
+      "summary": "Unsent Emails while ANONYMOUS",
+      "creator": {
+        "self": "https://jira.xxx.com/rest/api/2/user?username=estoianova",
+        "name": "estoianova",
+        "key": "estoianova",
+        "emailAddress": "Ekaterina.Stoianova@xxx.com",
+        "avatarUrls": {
+          "48x48": "https://jira.xxx.com/secure/useravatar?avatarId=10337",
+          "24x24": "https://jira.xxx.com/secure/useravatar?size=small&avatarId=10337",
+          "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&avatarId=10337",
+          "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&avatarId=10337"
+        },
+        "displayName": "Ekaterina Stoianova",
+        "active": true,
+        "timeZone": "Europe/Berlin"
+      },
+      "subtasks": [
+
+      ],
+      "reporter": {
+        "self": "https://jira.xxx.com/rest/api/2/user?username=estoianova",
+        "name": "estoianova",
+        "key": "estoianova",
+        "emailAddress": "Ekaterina.Stoianova@xxx.com",
+        "avatarUrls": {
+          "48x48": "https://jira.xxx.com/secure/useravatar?avatarId=10337",
+          "24x24": "https://jira.xxx.com/secure/useravatar?size=small&avatarId=10337",
+          "16x16": "https://jira.xxx.com/secure/useravatar?size=xsmall&avatarId=10337",
+          "32x32": "https://jira.xxx.com/secure/useravatar?size=medium&avatarId=10337"
+        },
+        "displayName": "Ekaterina Stoianova",
+        "active": true,
+        "timeZone": "Europe/Berlin"
+      },
+      "customfield_10000": "1|hzuz5z:0b",
+      "aggregateprogress": {
+        "progress": 0,
+        "total": 0
+      },
+      "customfield_10001": [
+        "com.atlassian.greenhopper.service.sprint.Sprint@553855be[id=1631,rapidViewId=547,state=ACTIVE,name=Amelia MP Sprint 7,startDate=2019-04-01T13:03:20.396Z,endDate=2019-04-15T13:03:00.000Z,completeDate=<null>,sequence=1631,goal=Finish 3 Skills Test feedback fixes.]"
+      ],
+      "customfield_10002": null,
+      "customfield_10200": null,
+      "customfield_10201": null,
+      "customfield_10202": null,
+      "customfield_10400": null,
+      "customfield_10710": null,
+      "environment": null,
+      "customfield_10711": null,
+      "customfield_10712": null,
+      "customfield_10713": null,
+      "customfield_10714": null,
+      "duedate": null,
+      "customfield_10715": null,
+      "customfield_10716": null,
+      "customfield_10717": null,
+      "customfield_10718": null,
+      "progress": {
+        "progress": 0,
+        "total": 0
+      },
+      "customfield_10719": null,
+      "votes": {
+        "self": "https://jira.xxx.com/rest/api/2/issue/AMMP22019-171/votes",
+        "votes": 0,
+        "hasVoted": false
+      }
+    }
   }
 ]
