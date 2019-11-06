@@ -2,7 +2,7 @@
 
 """tasksconverter: ...."""
 import subprocess
-from logzero import logger
+from loguru import logger
 import matplotlib
 # workaround for MacOS
 matplotlib.use('TkAgg')

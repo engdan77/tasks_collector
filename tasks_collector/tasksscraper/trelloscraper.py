@@ -6,7 +6,7 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 from trello import TrelloClient
-from logzero import logger
+from loguru import logger
 from typing import List
 # import keyring
 

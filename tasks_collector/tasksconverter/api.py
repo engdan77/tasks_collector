@@ -7,7 +7,7 @@ __email__ = "daniel@engvalls.eu"
 
 import dateparser
 from datetime import timedelta, datetime
-from logzero import logger
+from loguru import logger
 from typing import List, Dict, Union, Optional
 
 

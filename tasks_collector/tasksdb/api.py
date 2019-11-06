@@ -3,7 +3,7 @@
 """tasksdb: ...."""
 
 import peewee as pw
-from logzero import logger
+from loguru import logger
 import datetime
 from dictdiffer import diff
 from appdirs import user_config_dir

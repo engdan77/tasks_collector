@@ -1,4 +1,4 @@
-logzero==1.5.0
+loguru==0.3.2
 jira==2.0.0
 dateparser==0.7.0
 peewee==3.7.1

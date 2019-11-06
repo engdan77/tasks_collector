@@ -7,9 +7,7 @@ import datetime as dt
 import keyring
 from getpass import getpass
 import sys
-import logzero
-from logzero import logger
-import logging
+from loguru import logger
 import applescript
 
 from tasks_collector import reportgenerator
@@ -86,8 +84,9 @@ def main():
         # TODO: some tricky things need to be fixed to able to --ignore-gooey
         return Gooey(get_args, program_name='Tasks Collector', navigation='TABBED')()
 
+    logger.remove()
+    logger.add(sys.stderr, level=args.loglevel)
 
-    logzero.loglevel(getattr(logging, args.loglevel))
     if 'sqlite_database' not in args.__dict__.keys():
         db_path = default_db_path
     else:
