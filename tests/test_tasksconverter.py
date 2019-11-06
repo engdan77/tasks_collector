@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import pytest
 from tasks_collector.tasksconverter.api import to_generic
 import json
@@ -25,5 +28,5 @@ def test_to_generic(input_file, input_type, output_dotted, expected_len, caplog)
             l.append(AttrDict(_))
         input_list = l
     generic_list = to_generic(input_list, _type=input_type)
-    print(len(caplog.records))
-    assert len(generic_list) == expected_len
+    assert len(generic_list) == expected_len, 'invalid number of records'
+    assert 'complete converting to generic' in caplog.text, 'completion not found in log'
