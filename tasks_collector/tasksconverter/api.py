@@ -88,10 +88,10 @@ def correct_task(input_dict: Dict) -> Union[str, Dict]:
     i = input_dict
     logger.debug(f'correcting dates in {input_dict}')
     # make sure there is a start date
-    if 'start_date' in i.keys():
-        if i['start_date'] is None and 'close_date' in i.keys():
-            if i['close_date'] is not None:
-                i['start_date'] = (dateparser.parse(i['close_date']) - timedelta(days=1)).strftime('%Y-%m-%d')
+    start_date = dateparser.parse(str(i.get('start_date', None)))
+    close_date = dateparser.parse(str(i.get('close_date', None)))
+    if any(((not start_date and close_date), (start_date and close_date and close_date <= start_date))):
+        i['start_date'] = (dateparser.parse(i['close_date']) - timedelta(days=1)).strftime('%Y-%m-%d')
     return i
 
 
