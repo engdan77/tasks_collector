@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from tasks_collector.tasksdb.api import get_default_db_path
 import peewee as pw
+import pytest
 
 
 def test_get_default_db_path(monkeypatch, tmp_path):

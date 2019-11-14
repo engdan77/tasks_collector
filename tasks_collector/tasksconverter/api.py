@@ -47,7 +47,7 @@ def parse_category(category_list: List, _type='outlook') -> Dict:
             result.update({_type: None})
         for category in category_list:
             for _type in rules.keys():
-                match = re.match(rules[_type], category)
+                match = re.search(rules[_type], category)
                 if match:
                     result.update({_type: match.group(1)})
         return result

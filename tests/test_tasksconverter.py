@@ -3,7 +3,7 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 import pytest
-from tasks_collector.tasksconverter.api import to_generic, correct_task
+from tasks_collector.tasksconverter.api import to_generic, correct_task, format_subject, parse_category, convert_date_attribute
 import json
 from attrdict import AttrDict
 import logging
@@ -48,3 +48,17 @@ def test_to_generic(input_file, input_type, output_dotted, expected_len, caplog)
                           ])
 def test_correct_task(input_dict, output_dict):
     assert correct_task(input_dict) == output_dict
+
+
+def test_format_subject():
+    assert format_subject('foo @bar(spam)', _type='outlook') == 'foo <b>@bar(spam)</b>'
+
+
+def test_parse_category():
+    assert parse_category(['(my_client) {my_category} some task']) == {'category': 'my_category',
+                                                                       'client': 'my_client'}
+
+
+@pytest.mark.parametrize('input_date,output', [('5/10/2019', '2019-05-10')])
+def test_convert_date_attribute(input_date, output):
+    assert False
