@@ -59,6 +59,7 @@ def test_parse_category():
                                                                        'client': 'my_client'}
 
 
-@pytest.mark.parametrize('input_date,output', [('5/10/2019', '2019-05-10')])
+@pytest.mark.parametrize('input_date,output', [('5/10/2019', '2019-05-10'),
+                                               ('2019-01-01', '2019-01-01')])
 def test_convert_date_attribute(input_date, output):
-    assert False
+    assert convert_date_attribute(input_date) == output
