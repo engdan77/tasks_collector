@@ -12,12 +12,12 @@ def test_get_default_db_path(monkeypatch, tmp_path):
 
 
 @pytest.fixture
-def DbTask():
+def setup_db():
     db = pw.SqliteDatabase(':memory:')
     class Base(pw.Model):
         class Meta:
             database = db
-    class _Task(Base):
+    class Task(Base):
         subject = pw.CharField(unique=True)
         client = pw.CharField(null=True)
         category = pw.CharField(null=True)
@@ -26,17 +26,12 @@ def DbTask():
         due_date = pw.DateField(null=True)
         modified_date = pw.DateField(null=True)
         status = pw.CharField(null=True)
-    return db, _Task
-
-
-@pytest.fixture
-def fix_db(DbTask):
-    db, Task = DbTask
     db.connect()
     db.create_tables([Task], safe=True)
     return db, Task
 
-def test_insert_or_updates_tasks(fix_db, mocker):
+
+def test_insert_or_updates_tasks(setup_db, mocker):
     t1 = {'subject': '[xxx-656] Helping xxx with escalations after xxx-Dev upgrade to 3.5',
           'client': 'xxx',
           'category': None,
@@ -48,7 +43,7 @@ def test_insert_or_updates_tasks(fix_db, mocker):
     t2 = t1.copy()
     t2['subject'] = 'Foo Bar'
     task_list = [t1, t2]
-    db, Task = fix_db
+    db, Task = setup_db
     mocker.patch('tasks_collector.tasksdb.api.Task', Task)
     insert_or_updates_tasks(task_list)
     assert len(list(Task.select())) == 2
