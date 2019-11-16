@@ -36,24 +36,19 @@ def fix_db(DbTask):
     db.create_tables([Task], safe=True)
     return db, Task
 
-def test_insert_or_updates_tasks(fix_db):
-    t = {'subject': '[xxx-656] Helping xxx with escalations after xxx-Dev upgrade to 3.5',
-         'client': 'xxx',
-         'category': None,
-         'start_date': '2018-11-14',
-         'close_date': '2018-11-15',
-         'due_date': '2018-11-15',
-         'modified_date': '2018-11-15',
-         'status': 'close'}
-    task_list = [t, t.copy().update({'subject': 'foo bar'})]
-    # db = pw.SqliteDatabase(':memory:')
-    # db.connect()
-    # db.create_tables([Task], safe=True)
-
-    # task, created = Task.get_or_create(subject='xxxx')
-    # print(list(Task.select()))
+def test_insert_or_updates_tasks(fix_db, mocker):
+    t1 = {'subject': '[xxx-656] Helping xxx with escalations after xxx-Dev upgrade to 3.5',
+          'client': 'xxx',
+          'category': None,
+          'start_date': '2018-11-14',
+          'close_date': '2018-11-15',
+          'due_date': '2018-11-15',
+          'modified_date': '2018-11-15',
+          'status': 'close'}
+    t2 = t1.copy()
+    t2['subject'] = 'Foo Bar'
+    task_list = [t1, t2]
     db, Task = fix_db
-    task, created = Task.get_or_create(subject='xxxx')
-    print(list(Task.select()))
+    mocker.patch('tasks_collector.tasksdb.api.Task', Task)
     insert_or_updates_tasks(task_list)
-    assert 1 == 1
+    assert len(list(Task.select())) == 2
