@@ -370,7 +370,7 @@ def get_lowest_value(input_dict_list: Dict, key_name: str) -> int:
     for d in input_dict_list:
         current_value = d[key_name]
         if type(current_value) is int:
-            if current_value < lowest:
+            if current_value >= lowest:
                 lowest = current_value
     return lowest
 
