@@ -118,7 +118,7 @@ def cleanup(before_date):
 
 class OpenDB(object):
     """A class to simplify creation of a database."""
-    def __init__(self, db_file, type='sqlite'):
+    def __init__(self, db_file, _type='sqlite'):
         db.init(db_file)
         db.connect()
         db.create_tables([Task], safe=True)
