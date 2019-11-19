@@ -1,5 +1,5 @@
 from tasks_collector.reportgenerator.api import dict_keys_to_ymd, render_task, \
-    all_values, count_items, get_lowest_value, create_concurrent_list
+    all_values, count_items, get_lowest_value, create_concurrent_list, create_gantt_list, filter_generic_tasks
 import pytest
 
 
@@ -48,47 +48,78 @@ def test_get_lowest_value(setup_list_dict):
 
 @pytest.fixture
 def setup_generic_task():
-    return [{'name': 'Foo Bar 1',
+    return [{'subject': 'Foo Bar 1',
              'start_date': '2019-01-10',
-             'close_date': '2019-01-15',
-             'client_category': 'my_category_1'},
-            {'name': 'Foo Bar 2',
+             'close_date': None,
+             'status': 'open',
+             'due_date': '2019-01-12',
+             'modified_date': '2019-01-10',
+             'client_category': 'my_category_1',
+             'client': 'client1',
+             'category': 'my_category_1'},
+            {'subject': 'Foo Bar 2',
              'start_date': '2019-02-10',
              'close_date': '2019-02-15',
-             'client_category': 'my_category_2'},
-            {'name': 'Foo Bar 3',
+             'due_date': None,
+             'modified_date': '2019-02-15',
+             'status': 'close',
+             'client_category': 'my_category_2',
+             'client': 'client2',
+             'category': 'my_category_2'},
+            {'subject': 'Foo Bar 3',
              'start_date': '2019-03-10',
-             'close_date': '2019-03-15',
-             'client_category': 'my_category_3'}
+             'close_date': None,
+             'due_date': '2019-03-12',
+             'modified_date': '2019-03-10',
+             'status': 'open',
+             'client_category': 'my_category_3',
+             'client': 'client3',
+             'category': 'my_category_3'}
             ]
 
 
 def test_create_concurrent_list(setup_generic_task):
     expected = [
-         {'date': '2019-01-10',
-          'my_category_1': 1,
-          'my_category_2': 0,
-          'my_category_3': 0},
-         {'date': '2019-01-15',
-          'my_category_1': 0,
-          'my_category_2': 0,
-          'my_category_3': 0},
-         {'date': '2019-02-10',
-          'my_category_1': 0,
-          'my_category_2': 1,
-          'my_category_3': 0},
-         {'date': '2019-02-15',
-          'my_category_1': 0,
-          'my_category_2': 0,
-          'my_category_3': 0},
-         {'date': '2019-03-10',
-          'my_category_1': 0,
-          'my_category_2': 0,
-          'my_category_3': 1},
-         {'date': '2019-03-15',
-          'my_category_1': 0,
-          'my_category_2': 0,
-          'my_category_3': 0}
+        {'date': '2019-01-10',
+         'my_category_1': 1,
+         'my_category_2': 0,
+         'my_category_3': 0},
+        {'date': '2019-01-15',
+         'my_category_1': 0,
+         'my_category_2': 0,
+         'my_category_3': 0},
+        {'date': '2019-02-10',
+         'my_category_1': 0,
+         'my_category_2': 1,
+         'my_category_3': 0},
+        {'date': '2019-02-15',
+         'my_category_1': 0,
+         'my_category_2': 0,
+         'my_category_3': 0},
+        {'date': '2019-03-10',
+         'my_category_1': 0,
+         'my_category_2': 0,
+         'my_category_3': 1},
+        {'date': '2019-03-15',
+         'my_category_1': 0,
+         'my_category_2': 0,
+         'my_category_3': 0}
     ]
     result = create_concurrent_list(setup_generic_task, name_key='client_category')
     assert result == expected
+
+
+def test_create_gantt_list(setup_generic_task):
+    expected = [
+        ['client1:my_category_1:Foo Bar 1', '2019-01-10', '2019-01-12', 'over_due'],
+        ['client2:my_category_2:Foo Bar 2', '2019-02-10', '2019-02-15', 'close'],
+        ['client3:my_category_3:Foo Bar 3', '2019-03-10', '2019-03-12', 'over_due']]
+    assert create_gantt_list(setup_generic_task, default_client='MyDefaultClient') == expected
+
+
+@pytest.mark.parametrize('from_date,to_date,include_open,expected_len',
+                         [('2019-01-01', '2019-01-20', False, 1),
+                          ('2019-01-01', '2019-01-20', True, 2)])
+def test_filter_generic_tasks(setup_generic_task, from_date, to_date, include_open, expected_len):
+    result = filter_generic_tasks(setup_generic_task, from_date=from_date, to_date=to_date, include_open=include_open)
+    assert len(result) == expected_len
