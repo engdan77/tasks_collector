@@ -80,4 +80,4 @@ def test_cleanup(setup_initial_task, sample_task):
     t2['close_date'] = None
     insert_or_updates_tasks([t2])
     cleanup('2019-01-20')
-    assert Task.select().order_by(Task.id.desc()).get().close_date == d(2019, 11, 18)
+    assert Task.select().order_by(Task.id.desc()).get().close_date == d.today()
