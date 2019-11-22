@@ -79,32 +79,22 @@ def setup_generic_task():
 
 
 def test_create_concurrent_list(setup_generic_task):
-    expected = [
-        {'date': '2019-01-10',
-         'my_category_1': 1,
-         'my_category_2': 0,
-         'my_category_3': 0},
-        {'date': '2019-01-15',
-         'my_category_1': 0,
-         'my_category_2': 0,
-         'my_category_3': 0},
-        {'date': '2019-02-10',
-         'my_category_1': 0,
-         'my_category_2': 1,
-         'my_category_3': 0},
-        {'date': '2019-02-15',
-         'my_category_1': 0,
-         'my_category_2': 0,
-         'my_category_3': 0},
-        {'date': '2019-03-10',
-         'my_category_1': 0,
-         'my_category_2': 0,
-         'my_category_3': 1},
-        {'date': '2019-03-15',
-         'my_category_1': 0,
-         'my_category_2': 0,
-         'my_category_3': 0}
-    ]
+    expected = [{'date': '2019-01-10',
+                 'my_category_1': 1,
+                 'my_category_2': 0,
+                 'my_category_3': 0},
+                {'date': '2019-02-10',
+                 'my_category_1': 1,
+                 'my_category_2': 1,
+                 'my_category_3': 0},
+                {'date': '2019-02-15',
+                 'my_category_1': 1,
+                 'my_category_2': 0,
+                 'my_category_3': 0},
+                {'date': '2019-03-10',
+                 'my_category_1': 1,
+                 'my_category_2': 0,
+                 'my_category_3': 1}]
     result = create_concurrent_list(setup_generic_task, name_key='client_category')
     assert result == expected
 
