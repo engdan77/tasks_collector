@@ -6,10 +6,12 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 import applescript
+import osascript
 from typing import List
+import json
 
 
-def get_outlook_tasks() -> List:
+def get_outlook_tasks_legacy() -> List:
     """Get Outlook tasks
 
     Returns:
@@ -54,3 +56,60 @@ def get_outlook_tasks() -> List:
     ''')  # nopep8
     outlook_tasks = scpt.call('getTasks')
     return outlook_tasks
+
+
+def get_outlook_tasks() -> List:
+    """Get Outlook tasks
+
+    Returns:
+        List of tasks from Outlook
+
+    """
+    # noinspection PyPep8,PyPep8
+    c, o, e = osascript.run('''
+    set result to "["
+    tell application "Microsoft Outlook"
+        set result to "["
+        activate
+        display dialog "Will now process all current outlook tasks selected"
+        set selectedTasks to selection
+        set c to "{"
+        set taskList to {}
+        repeat with theTask in selectedTasks
+            if class of theTask is task then
+                set c to c & "\\"taskName\\": \\"" & name of theTask & "\\""
+                set theContent to plain text content of theTask
+                if theContent is missing value then
+                    set theContent to ""
+                end if
+                set c to c & ",\\"taskContent\\": \\"" & theContent & "\\""
+                set c to c & ",\\"taskPriority\\": \\"" & priority of theTask & "\\""
+                set theFolder to folder of theTask
+                set c to c & ",\\"taskFolder\\": \\"" & name of theFolder & "\\""
+                set c to c & ",\\"modifiedDate\\": \\"" & modification date of theTask & "\\""
+                set c to c & ",\\"startDate\\": \\"" & start date of theTask & "\\""
+                set c to c & ",\\"due\\": \\"" & due date of theTask & "\\""
+                set c to c & ",\\"completeDate\\": \\"" & completed date of theTask & "\\""
+                set c to c & ",\\"taskPriority\\": \\"" & priority of theTask & "\\""
+                set c to c & ",\\"taskPriority\\": \\"" & priority of theTask & "\\""
+                
+                set theCategory to category of theTask
+                set catList to "["
+                repeat with oneCat in theCategory
+                    set theCategoryName to name of oneCat
+                    set catList to catList & ",\\"" & theCategoryName & "\\""
+                end repeat
+                set catList to catList & "]"
+                set c to c & ",\\"taskCategories\\": " & catList & "\\""
+                set c to c & "},"
+            end if
+            set result to result & c
+        end repeat
+    end tell
+    result
+    ''') # nopep8
+    if c == 0:
+        result = json.loads(o)
+        return result
+    else:
+        return None
