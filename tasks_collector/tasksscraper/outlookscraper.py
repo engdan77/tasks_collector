@@ -9,6 +9,7 @@ import applescript
 import osascript
 from typing import List
 import json
+from loguru import logger
 
 
 def get_outlook_tasks_legacy() -> List:
@@ -67,15 +68,13 @@ def get_outlook_tasks() -> List:
     """
     # noinspection PyPep8,PyPep8
     c, o, e = osascript.run('''
-    set result to "["
     tell application "Microsoft Outlook"
-        set result to "["
         activate
         display dialog "Will now process all current outlook tasks selected"
+        set result to ""
         set selectedTasks to selection
-        set c to "{"
-        set taskList to {}
         repeat with theTask in selectedTasks
+            set c to "{"
             if class of theTask is task then
                 set c to c & "\\"taskName\\": \\"" & name of theTask & "\\""
                 set theContent to plain text content of theTask
@@ -100,14 +99,17 @@ def get_outlook_tasks() -> List:
                     set catList to catList & ",\\"" & theCategoryName & "\\""
                 end repeat
                 set catList to catList & "]"
-                set c to c & ",\\"taskCategories\\": " & catList & "\\""
+                set c to c & ",\\"taskCategories\\": " & catList
                 set c to c & "},"
             end if
             set result to result & c
         end repeat
     end tell
-    result
+    return result
     ''') # nopep8
+    o = o.strip(',')
+    o = f'[{o}]'
+    logger.info(f'got following from Outlook tasks: {o}')
     if c == 0:
         result = json.loads(o)
         return result
