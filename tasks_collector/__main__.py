@@ -85,7 +85,7 @@ def main():
         return Gooey(get_args, program_name='Tasks Collector', navigation='TABBED')()
 
     logger.remove()
-    logger.add(sys.stderr, level=args.loglevel)
+    logger.add(sys.stderr, level=args.loglevel, colorize=not gui_disabled)
 
     if 'sqlite_database' not in args.__dict__.keys():
         db_path = default_db_path
@@ -124,8 +124,9 @@ def main():
         if 'outlook' in args and args.outlook:
             try:
                 outlook_tasks = tasks_collector.tasksscraper.outlookscraper.get_outlook_tasks()
-            except applescript.ScriptError:
+            except applescript.ScriptError as e:
                 logger.warning('Unable to retrieve outlook tasks, make sure Outlook has been started')
+                logger.error(e)
             else:
                 outlook_generic_tasks = to_generic(outlook_tasks, _type='outlook')
                 generic_tasks.extend(outlook_generic_tasks)
@@ -148,5 +149,7 @@ def main():
 
 # noinspection PyPep8
 if __name__ == '__main__':
+    logger.remove()
+    logger.add(sys.stderr, level="INFO", colorize=False)
     logger.info('Pass argument --ignore-gooey to use CLI')
     main()
