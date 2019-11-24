@@ -122,11 +122,9 @@ def main():
         logger.info('collection initiated!')
         generic_tasks = []
         if 'outlook' in args and args.outlook:
-            try:
-                outlook_tasks = tasks_collector.tasksscraper.outlookscraper.get_outlook_tasks()
-            except applescript.ScriptError as e:
+            outlook_tasks = tasks_collector.tasksscraper.outlookscraper.get_outlook_tasks()
+            if not outlook_tasks:
                 logger.warning('Unable to retrieve outlook tasks, make sure Outlook has been started')
-                logger.error(e)
             else:
                 outlook_generic_tasks = to_generic(outlook_tasks, _type='outlook')
                 generic_tasks.extend(outlook_generic_tasks)
