@@ -68,9 +68,9 @@ def get_outlook_tasks() -> List:
     """
     # noinspection PyPep8,PyPep8
     c, o, e = osascript.run('''
-    display dialog "Will now process all current outlook tasks selected"
+    -- display dialog "Will now process all current outlook tasks selected"
     tell application "Microsoft Outlook"
-        activate
+        -- activate
         set x to ""
         set selectedTasks to selected objects
         if selectedTasks is {} then
@@ -95,10 +95,15 @@ def get_outlook_tasks() -> List:
                 set c to c & ",\\"taskPriority\\": \\"" & priority of theTask & "\\""
                 set theCategory to category of theTask
                 set catList to "["
+                set cat_count to 0 as number
                 repeat with oneCat in theCategory
                     if oneCat is not equal to ""
                         set theCategoryName to name of oneCat
-                        set catList to catList & "\\"" & theCategoryName & "\\","
+                        if cat_count > 0 then
+                            set catList to (catList & ",") as string
+                        end if
+                        set catList to catList & "\\"" & theCategoryName & "\\""
+                        set cat_count to cat_count + 1 as number
                     end if
                 end repeat
                 set catList to catList & "]"
