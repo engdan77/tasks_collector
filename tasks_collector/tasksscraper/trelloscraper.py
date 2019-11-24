@@ -55,7 +55,7 @@ def get_trello_tasks(api_key: str, token: str, token_secret: str, my_name: str) 
 
     client = TrelloClient(
         api_key=api_key,
-        api_secret='your-secret',
+        api_secret=None,
         token=token,
         token_secret=token_secret
     )
