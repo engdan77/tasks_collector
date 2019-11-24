@@ -3,6 +3,10 @@ The purpose with this project was to address the headache of collecting and orga
 These tasks spread across different platforms such as Outlook, Jira, Trello and so forth and felt like I had to structure and
  store these into a database and being able to create some charts based on this. 
 
+## Demo
+
+[![asciicast](https://asciinema.org/a/tsxZmDb4NIBDylFUQHSZ82mVR.svg)](https://asciinema.org/a/tsxZmDb4NIBDylFUQHSZ82mVR)
+
 ##Installation
 
 Install CopyQ according to https://hluk.github.io/CopyQ/
