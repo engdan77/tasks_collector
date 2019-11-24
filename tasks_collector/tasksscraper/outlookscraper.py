@@ -68,11 +68,15 @@ def get_outlook_tasks() -> List:
     """
     # noinspection PyPep8,PyPep8
     c, o, e = osascript.run('''
+    display dialog "Will now process all current outlook tasks selected"
     tell application "Microsoft Outlook"
         activate
-        display dialog "Will now process all current outlook tasks selected"
-        set result to ""
-        set selectedTasks to selection
+        set x to ""
+        set selectedTasks to selected objects
+        if selectedTasks is {} then
+            display dialog "Please select a task first and then run this script." with icon 1
+            return
+        end if
         repeat with theTask in selectedTasks
             set c to "{"
             if class of theTask is task then
@@ -82,7 +86,6 @@ def get_outlook_tasks() -> List:
                     set theContent to ""
                 end if
                 set c to c & ",\\"taskContent\\": \\"" & theContent & "\\""
-                set c to c & ",\\"taskPriority\\": \\"" & priority of theTask & "\\""
                 set theFolder to folder of theTask
                 set c to c & ",\\"taskFolder\\": \\"" & name of theFolder & "\\""
                 set c to c & ",\\"modifiedDate\\": \\"" & modification date of theTask & "\\""
@@ -90,26 +93,27 @@ def get_outlook_tasks() -> List:
                 set c to c & ",\\"due\\": \\"" & due date of theTask & "\\""
                 set c to c & ",\\"completeDate\\": \\"" & completed date of theTask & "\\""
                 set c to c & ",\\"taskPriority\\": \\"" & priority of theTask & "\\""
-                set c to c & ",\\"taskPriority\\": \\"" & priority of theTask & "\\""
-                
                 set theCategory to category of theTask
                 set catList to "["
                 repeat with oneCat in theCategory
-                    set theCategoryName to name of oneCat
-                    set catList to catList & ",\\"" & theCategoryName & "\\""
+                    if oneCat is not equal to ""
+                        set theCategoryName to name of oneCat
+                        set catList to catList & "\\"" & theCategoryName & "\\","
+                    end if
                 end repeat
                 set catList to catList & "]"
                 set c to c & ",\\"taskCategories\\": " & catList
                 set c to c & "},"
             end if
-            set result to result & c
+        set x to (x & c) as string
         end repeat
     end tell
-    return result
+    return x
     ''') # nopep8
     o = o.strip(',')
     o = f'[{o}]'
-    logger.info(f'got following from Outlook tasks: {o}')
+    logger.info(f'osascript error: {e}')
+    logger.info(f'osascript output: {o}')
     if c == 0:
         result = json.loads(o)
         return result
