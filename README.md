@@ -3,23 +3,52 @@ The purpose with this project was to address the headache of collecting and orga
 These tasks spread across different platforms such as Outlook, Jira, Trello and so forth and felt like I had to structure and
  store these into a database and being able to create some charts based on this. 
 
-## Demo
+## Requirements
 
-[![asciicast](https://asciinema.org/a/tsxZmDb4NIBDylFUQHSZ82mVR.svg)](https://asciinema.org/a/tsxZmDb4NIBDylFUQHSZ82mVR)
+At this moment this application has yet only been tested from MacOS High Sierra and above.
+Some parts of the application related to Outlook (trough AppleScript) and CopyQ only available to MacOS.
+
+## Introduction
+
+This below is a brief run through how one could use this tool from your terminal and how you can use this package in your own Python applications.
+
+[![asciicast](https://asciinema.org/a/MJUyCoJXqPlvzqIxG8PX04f5x.svg)](https://asciinema.org/a/MJUyCoJXqPlvzqIxG8PX04f5x)
 
 ##Installation
 
-Install CopyQ according to https://hluk.github.io/CopyQ/
 
 ```
 # install -r requirements.txt
 ```
 
-##Usage
-In general you only need to pass the sqlite database where you'd like to store it.
+##Usage graphical interface
+The default entry-point for this application is GUI (based on the great module Gooey) to simplify building a window presenting all options.
 
-####Collect
-#####Outlook
+[IMAGE]
+
+##Usage command-line
+To use command-line you need always supply the --ignore-gooey flag do disable GUI (graphical interface)
+In general you only need to pass the sqlite database where you'd like to store it together with the flag depending which source to use
+
+```bash
+$ tasks_collector collect --help --ignore-gooey
+usage: tasks_collector collect [-h] [--outlook] [--jira JIRA]
+                               [--trello TRELLO]
+                               [--sqlite_database SQLITE_DATABASE]
+                               [--loglevel {INFO,DEBUG}]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --outlook
+  --jira JIRA           username@jiraserver
+  --trello TRELLO       api_key:token:token_secret:my_name
+  --sqlite_database SQLITE_DATABASE
+                        name of sqlite to export/update to
+  --loglevel {INFO,DEBUG}
+```
+
+###Collect
+####Outlook
 When passing --outlook argument you just need to make sure you've selected all Outlook-tasks including those completed.
 While using Outlook you can add the following naming convention of Outlooks "Categories" 
 
@@ -37,60 +66,60 @@ for giving you possibility to assign clients associated with task.
 
 for assigning the task specific project.
 
-#####Jira
+####Jira
 The script will use the username@jiraserver supplied to detect all tasks that are assigned to you and collect their most recent details into the database.
+Name of the board will become the representation of "client"
 
-```
-# python tasks_collector.py collect --help
-usage: tasks_collector.py collect [-h] [--outlook] [--jira JIRA]
-                                  [--loglevel {INFO,DEBUG}]
-                                  sqlite_database
+####Trello
+The script will use an argument structured as 'api-key:token:token_secret:my_name' 
+You will get api-key, token and token secret from https://trello.com/app-key
+The my_name is the name as your logged in user has, this is to be able to identify "your" tasks amongst others in boards.
+The board name will be the representation of "client"
 
-positional arguments:
-  sqlite_database       name of sqlite to export/update to
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --outlook
-  --jira JIRA           username@jiraserver
-  --loglevel {INFO,DEBUG}
-```
-
-######Credentials
+#####Credentials
 
 Currently use keyring to allow you to store credentials locally not being exposed.
 First time you run it will prompt you for password.
 
 ####Report
-```
-# python tasks_collector.py report --help
-usage: tasks_collector.py report [-h] [--days number_of_days_in_past]
-                                 [--loglevel {INFO,DEBUG}]
-                                 sqlite_database
 
-positional arguments:
-  sqlite_database       name of sqlite to get data from
+Install CopyQ according to https://hluk.github.io/CopyQ/ if you like to be able to export your report to your clipboard.
+
+```bash
+$ tasks_collector report --help --ignore-gooey
+2019-11-25 18:46:09.199 | INFO     | tasks_collector.__main__:main:79 - no gui
+2019-11-25 18:46:09.200 | DEBUG    | tasks_collector.tasksdb.api:get_default_db_path:48 - no local config directory, directory will be used /Users/edo/Library/Application Support/tasks_collector.tasksdb
+usage: tasks_collector report [-h] [--days number_of_days_in_past]
+                              [--sqlite_database SQLITE_DATABASE] [--copyq]
+                              [--show]
+                              [--default_client name of default client]
+                              [--loglevel {INFO,DEBUG}]
 
 optional arguments:
   -h, --help            show this help message and exit
   --days number_of_days_in_past
                         Number of days to cover in the report
+  --sqlite_database SQLITE_DATABASE
+                        name of sqlite to export/update to
+  --copyq               paste output as MIME to pastebin, good for sending by
+                        e-mail
+  --show                show gantt image
+  --default_client name of default client
   --loglevel {INFO,DEBUG}
 ```
 
 ####Cleanup
 This is useful if for example ownership changes of tickets in Jira end you'd like to close them in your report.
-```
-usage: tasks_collector.py cleanup [-h] [--before DAYS]
-                                  [--loglevel {INFO,DEBUG}]
-                                  sqlite_database
-
-positional arguments:
-  sqlite_database       name of sqlite to export/update to
+```bash
+$ tasks_collector cleanup --help --ignore-gooey
+usage: tasks_collector cleanup [-h] [--before DAYS]
+                               [--sqlite_database SQLITE_DATABASE]
+                               [--loglevel {INFO,DEBUG}]
 
 optional arguments:
   -h, --help            show this help message and exit
   --before DAYS         tickets before this number of days back to be closed
+  --sqlite_database SQLITE_DATABASE
+                        name of sqlite to export/update to
   --loglevel {INFO,DEBUG}
-
 ```
