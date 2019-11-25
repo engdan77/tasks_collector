@@ -2,7 +2,7 @@ from tasks_collector.tasksscraper.jirascraper import get_jira_tasks
 import json
 
 def test_get_jira_tasks(mocker):
-    with open('jira_tasks.json') as f:
+    with open('tests/jira_tasks.json') as f:
         input_list = json.loads(f.read())
     mocked_jira = mocker.patch('tasks_collector.tasksscraper.jirascraper.JIRA')
     mocked_jira.return_value.search_issues.return_value = input_list

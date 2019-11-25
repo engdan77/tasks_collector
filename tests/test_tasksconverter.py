@@ -21,9 +21,9 @@ def caplog(caplog):
 
 
 @pytest.mark.parametrize('input_file,input_type,output_dotted,expected_len',
-                         [('jira_tasks.json', 'jira', True, 2),
-                          ('outlook_tasks.json', 'outlook', False, 2),
-                          ('trello_tasks.json', 'trello', False, 2)])
+                         [('tests/jira_tasks.json', 'jira', True, 2),
+                          ('tests/outlook_tasks.json', 'outlook', False, 2),
+                          ('tests/trello_tasks.json', 'trello', False, 2)])
 def test_to_generic(input_file, input_type, output_dotted, expected_len, caplog):
     with open(input_file) as f:
         input_list = json.loads(f.read())

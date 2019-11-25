@@ -9,7 +9,7 @@ def test_add_project():
 
 
 def test_get_trello_tasks(mocker):
-    with open('trello_tasks.json') as f:
+    with open('tests/trello_tasks.json') as f:
         input_list = json.loads(f.read())
     mocker.patch('tasks_collector.tasksscraper.trelloscraper.TrelloClient')
     mocker.patch('tasks_collector.tasksscraper.trelloscraper.find_my_id')
