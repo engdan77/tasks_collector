@@ -8,6 +8,3 @@ python:
    version: 3.7
    install:
       - requirements: docs/requirements_sphinx.txt
-      - method: pip
-        path: .
-   system_packages: true
