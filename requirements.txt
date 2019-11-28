@@ -18,3 +18,13 @@ py-trello==0.15.0
 osascript==2019.4.13
 tox==3.14.1
 pytest-mock==1.11.2
+commonmark==0.9.1
+recommonmark==0.6.0
+sphinx-git==11.0.0
+sphinx-rtd-theme==0.4.3
+sphinxcontrib-applehelp==1.0.1
+sphinxcontrib-devhelp==1.0.1
+sphinxcontrib-htmlhelp==1.0.2
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==1.0.2
+sphinxcontrib-serializinghtml==1.1.3
