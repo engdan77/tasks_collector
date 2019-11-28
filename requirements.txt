@@ -4,9 +4,7 @@ dateparser==0.7.0
 peewee==3.7.1
 numpy==1.15.3
 keyring==15.1.0
-py_applescript==1.0.1
 matplotlib==3.0.0
-pyobjc==5.1.0
 PySimpleGUIQt==0.22.0
 PySide2==5.12.0
 Gooey==1.0.2
