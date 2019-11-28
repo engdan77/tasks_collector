@@ -1,35 +1,31 @@
-##Background
+# README Tasks Collector
+
+## Background
 The purpose with this project was to address the headache of collecting and organizing the tasks are/have worked with.
 These tasks spread across different platforms such as Outlook, Jira, Trello and so forth and felt like I had to structure and
  store these into a database and being able to create some charts based on this. 
 
 ## Requirements
-
 At this moment this application has yet only been tested from MacOS High Sierra and above.
 Some parts of the application related to Outlook (trough AppleScript) and CopyQ only available to MacOS.
 
 ## Introduction
-
 This below is a brief run through how one could use this tool from your terminal and how you can use this package in your own Python applications.
-
 [![asciicast](https://asciinema.org/a/MJUyCoJXqPlvzqIxG8PX04f5x.svg)](https://asciinema.org/a/MJUyCoJXqPlvzqIxG8PX04f5x)
 
-##Installation
-
-
+## Installation
 ```
 # install -r requirements.txt
 ```
 
-##Usage graphical interface
+## Usage graphical interface
 The default entry-point for this application is GUI (based on the great module Gooey) to simplify building a window presenting all options.
 
 [IMAGE]
 
-##Usage command-line
-To use command-line you need always supply the --ignore-gooey flag do disable GUI (graphical interface)
+## Usage command-line
+To use command-line you need always supply the **--ignore-gooey** flag do disable GUI (graphical interface)
 In general you only need to pass the sqlite database where you'd like to store it together with the flag depending which source to use
-
 ```bash
 $ tasks_collector collect --help --ignore-gooey
 usage: tasks_collector collect [-h] [--outlook] [--jira JIRA]
@@ -47,8 +43,8 @@ optional arguments:
   --loglevel {INFO,DEBUG}
 ```
 
-###Collect
-####Outlook
+### Collect
+#### Outlook
 When passing --outlook argument you just need to make sure you've selected all Outlook-tasks including those completed.
 While using Outlook you can add the following naming convention of Outlooks "Categories" 
 
@@ -66,24 +62,25 @@ for giving you possibility to assign clients associated with task.
 
 for assigning the task specific project.
 
-####Jira
+#### Jira
 The script will use the username@jiraserver supplied to detect all tasks that are assigned to you and collect their most recent details into the database.
 Name of the board will become the representation of "client"
 
-####Trello
+#### Trello
 The script will use an argument structured as 'api-key:token:token_secret:my_name' 
 You will get api-key, token and token secret from https://trello.com/app-key
 The my_name is the name as your logged in user has, this is to be able to identify "your" tasks amongst others in boards.
 The board name will be the representation of "client"
 
-#####Credentials
+##### Credentials
 
 Currently use keyring to allow you to store credentials locally not being exposed.
 First time you run it will prompt you for password.
 
-####Report
+#### Report
 
-Install CopyQ according to https://hluk.github.io/CopyQ/ if you like to be able to export your report to your clipboard.
+Install CopyQ according to https://hluk.github.io/CopyQ/ if you like to be able to export your report to your clipboard using the --copyq flag.
+But you can also get the graph when using the --show
 
 ```bash
 $ tasks_collector report --help --ignore-gooey
@@ -108,7 +105,11 @@ optional arguments:
   --loglevel {INFO,DEBUG}
 ```
 
-####Cleanup
+A sample of the output after pasting into e.g. a email for you manager might look like this
+
+[IMAGE]
+
+#### Cleanup
 This is useful if for example ownership changes of tickets in Jira end you'd like to close them in your report.
 ```bash
 $ tasks_collector cleanup --help --ignore-gooey
@@ -122,4 +123,45 @@ optional arguments:
   --sqlite_database SQLITE_DATABASE
                         name of sqlite to export/update to
   --loglevel {INFO,DEBUG}
+```
+
+## Create sphinx documentation
+To create documentation in docs/build/html
+```bash
+$ cd docs
+$ sphinx-apidoc -o build/ ../tasks_collector
+$ make html
+```
+
+## Test the code with coverage
+Thanks to tox this has been automated so all that you need to run "tox" from projects root directory e.g.
+```bash
+$ tox
+...
+py3.7.0 run-test: commands[0] | pytest --cov=tasks_collector tests/
+...........................                                                                                                                                                                                                            [100%]
+---------- coverage: platform darwin, python 3.7.1-final-0 -----------
+Name                                             Stmts   Miss  Cover
+--------------------------------------------------------------------
+tasks_collector/__init__.py                          1      0   100%
+tasks_collector/reportgenerator/__init__.py          0      0   100%
+tasks_collector/reportgenerator/api.py             234    117    50%
+tasks_collector/tasksconverter/__init__.py           0      0   100%
+tasks_collector/tasksconverter/api.py              100      6    94%
+tasks_collector/tasksdb/__init__.py                  0      0   100%
+tasks_collector/tasksdb/api.py                      80      8    90%
+tasks_collector/tasksscraper/__init__.py             0      0   100%
+tasks_collector/tasksscraper/jirascraper.py         17      3    82%
+tasks_collector/tasksscraper/outlookscraper.py      17      1    94%
+tasks_collector/tasksscraper/trelloscraper.py       37     13    65%
+--------------------------------------------------------------------
+TOTAL                                              486    148    70%
+
+27 passed, 4 warnings in 19.63s
+__________________________________________________________________________________________________________________ summary ___________________________________________________________________________________________________________________
+  py3.4.0: commands succeeded
+  py3.5.6: commands succeeded
+  py3.6.6: commands succeeded
+  py3.7.0: commands succeeded
+  congratulations :)
 ```
