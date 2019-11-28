@@ -22,7 +22,7 @@ This below is a brief run through how one could use this tool from your terminal
 ## Usage graphical interface
 The default entry-point for this application is GUI (based on the great module Gooey) to simplify building a window presenting all options.
 
-[main](https://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_gui.png | width=200)
+<img src="https://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_gui.png" width="800">
 
 ## Usage command-line
 To use command-line you need always supply the **--ignore-gooey** flag do disable GUI (graphical interface)
@@ -49,17 +49,20 @@ optional arguments:
 When passing --outlook argument you just need to make sure you've selected all Outlook-tasks including those completed.
 While using Outlook you can add the following naming convention of Outlooks "Categories" 
 
+```
 (client1)
 (client2)
 (client3)
 ...
-
+```
 for giving you possibility to assign clients associated with task.
 
+```
 {project1}
 {project2}
 {project3}
 ...
+```
 
 for assigning the task specific project.
 
@@ -108,7 +111,8 @@ optional arguments:
 
 A sample of the output after pasting into e.g. a email for you manager might look like this
 
-[main](https://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_report_screenshot.png | width=800)
+<img src="ttps://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_report_screenshot.png" width="300">
+
 
 #### Cleanup
 This is useful if for example ownership changes of tickets in Jira end you'd like to close them in your report.
