@@ -140,7 +140,7 @@ $ make html
 
 ## Test the code with coverage
 Thanks to tox this has been automated so all that you need to run "tox" from projects root directory e.g.
-```bash
+````bash
 $ tox
 ...
 py3.7.0 run-test: commands[0] | pytest --cov=tasks_collector tests/
@@ -169,4 +169,12 @@ ________________________________________________________________________________
   py3.6.6: commands succeeded
   py3.7.0: commands succeeded
   congratulations :)
-```
+````
+
+## API documentation
+
+Could be found at https://tasks-collector.readthedocs.io
+
+## Contact
+
+You can easiest contact me by my email daniel@engvalls.eu or my linked-in profile https://www.linkedin.com/in/danielengvall/
