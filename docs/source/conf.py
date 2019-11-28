@@ -16,7 +16,11 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 import recommonmark
 from recommonmark.transform import AutoStructify
+import mock
 
+MOCK_MODULES = ['wxpython', 'scipy', 'matplotlib', 'matplotlib.pyplot', 'scipy.interpolate', 'Gooey', 'PySimpleGUIQt', 'numpy']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
 
 # -- Project information -----------------------------------------------------
 
