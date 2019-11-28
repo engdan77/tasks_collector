@@ -11,6 +11,7 @@ Some parts of the application related to Outlook (trough AppleScript) and CopyQ 
 
 ## Introduction
 This below is a brief run through how one could use this tool from your terminal and how you can use this package in your own Python applications.
+
 [![asciicast](https://asciinema.org/a/MJUyCoJXqPlvzqIxG8PX04f5x.svg)](https://asciinema.org/a/MJUyCoJXqPlvzqIxG8PX04f5x)
 
 ## Installation
@@ -21,7 +22,7 @@ This below is a brief run through how one could use this tool from your terminal
 ## Usage graphical interface
 The default entry-point for this application is GUI (based on the great module Gooey) to simplify building a window presenting all options.
 
-[IMAGE]
+[main](https://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_gui.png | width=200)
 
 ## Usage command-line
 To use command-line you need always supply the **--ignore-gooey** flag do disable GUI (graphical interface)
@@ -107,7 +108,7 @@ optional arguments:
 
 A sample of the output after pasting into e.g. a email for you manager might look like this
 
-[IMAGE]
+[main](https://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_report_screenshot.png | width=800)
 
 #### Cleanup
 This is useful if for example ownership changes of tickets in Jira end you'd like to close them in your report.
