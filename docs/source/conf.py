@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 import recommonmark
 from recommonmark.transform import AutoStructify
-import mock
+from unittest import mock
 
 MOCK_MODULES = ['wxpython',
                 'scipy',
@@ -73,3 +73,5 @@ def setup(app):
             'auto_toc_tree_section': 'Contents',
             }, True)
     app.add_transform(AutoStructify)
+
+master_dock = 'index'
