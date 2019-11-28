@@ -22,7 +22,7 @@ This below is a brief run through how one could use this tool from your terminal
 ## Usage graphical interface
 The default entry-point for this application is GUI (based on the great module Gooey) to simplify building a window presenting all options.
 
-<img src="https://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_gui.png" width="800">
+<img src="https://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_gui.png" width="300">
 
 ## Usage command-line
 To use command-line you need always supply the **--ignore-gooey** flag do disable GUI (graphical interface)
@@ -111,7 +111,7 @@ optional arguments:
 
 A sample of the output after pasting into e.g. a email for you manager might look like this
 
-<img src="ttps://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_report_screenshot.png" width="300">
+<img src="https://github.com/engdan77/tasks_collector/raw/master/docs/tasks_collector_report_screenshot.png" width="600">
 
 
 #### Cleanup
