@@ -18,7 +18,18 @@ import recommonmark
 from recommonmark.transform import AutoStructify
 import mock
 
-MOCK_MODULES = ['wxpython', 'scipy', 'matplotlib', 'matplotlib.pyplot', 'scipy.interpolate', 'Gooey', 'PySimpleGUIQt', 'numpy']
+MOCK_MODULES = ['wxpython',
+                'scipy',
+                'matplotlib',
+                'matplotlib.pyplot',
+                'matplotlib.font_manager',
+                'matplotlib.legend',
+                'matplotlib.dates',
+                'pandas',
+                'scipy.interpolate',
+                'Gooey',
+                'PySimpleGUIQt',
+                'numpy']
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = mock.Mock()
 
