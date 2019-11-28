@@ -1,0 +1,9 @@
+name: tasks_collector
+type: sphinx
+python:
+   version: 3.7
+   install:
+      - requirements: requirements.txt
+      - method: pip
+        path: .
+   system_packages: true
