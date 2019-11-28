@@ -87,7 +87,6 @@ def render_task(client: str, category: str, subject: str, **kwargs) -> str:
         client:
         category:
         subject:
-        **kwargs:
 
     Returns:
 
