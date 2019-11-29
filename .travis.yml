@@ -29,4 +29,4 @@ jobs:
         - pip install --upgrade -r requirements.txt
         - pip install tox-travis
       script: tox
-      after_success: codecov --token=d8d00efc-1144-4649-aa3c-925aba381586
+      after_success: codecov
