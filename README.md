@@ -20,8 +20,10 @@ This below is a brief run through how one could use this tool from your terminal
 [![asciicast](https://asciinema.org/a/MJUyCoJXqPlvzqIxG8PX04f5x.svg)](https://asciinema.org/a/MJUyCoJXqPlvzqIxG8PX04f5x)
 
 ## Installation
-```
-# install -r requirements.txt
+```bash
+bash-4.4$ python -m venv venv
+bash-4.4$ source venv/bin/activate
+(venv) bash-4.4$ pip install tasks-collector
 ```
 
 ## Usage graphical interface
