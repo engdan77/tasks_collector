@@ -5,6 +5,9 @@
 [![codecov](https://codecov.io/gh/engdan77/tasks_collector/branch/master/graph/badge.svg)](https://codecov.io/gh//engdan77/tasks_collector)
 [![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
 
+## Read The Docs
+You can find the documentation including generated API docs at https://tasks-collector.readthedocs.io/en/latest/
+
 ## Background
 The purpose with this project was to address the headache of collecting and organizing the tasks are/have worked with.
 These tasks spread across different platforms such as Outlook, Jira, Trello and other platforms and felt like I had to structure and
