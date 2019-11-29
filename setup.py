@@ -22,7 +22,7 @@ for k, v in opt.items():
 
 setup(
     name='tasks_collector',
-    version='0.0.9',
+    version='0.9.1',
     packages=find_packages(),
     install_requires=opt['install_requires']['out'],
     url='https://github.com/engdan77/tasks_collector',
