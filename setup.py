@@ -35,6 +35,8 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
+        "Environment :: MacOS X",
+        "Topic :: Office/Business"
     ],
     entry_points={
         'console_scripts': ['tasks_collector = tasks_collector.__main__:main'],
