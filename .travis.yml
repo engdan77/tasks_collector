@@ -25,6 +25,8 @@ jobs:
         - virtualenv -p python3 --system-site-packages "$HOME/venv"
         - source "$HOME/venv/bin/activate"
       install:
+        - pip install codecov
         - pip install --upgrade -r requirements.txt
         - pip install tox-travis
       script: tox
+      after_success: codecov --token=d8d00efc-1144-4649-aa3c-925aba381586

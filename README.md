@@ -1,4 +1,6 @@
 # README Tasks Collector
+[![Build Status](https://travis-ci.com/engdan77/tasks_collector.svg?branch=master)](https://travis-ci.com/engdan77/tasks_collector)
+[![Documentation Status](https://readthedocs.org/projects/tasks-collector/badge/?version=latest)](https://tasks-collector.readthedocs.io/en/latest/?badge=latest)
 
 ## Background
 The purpose with this project was to address the headache of collecting and organizing the tasks are/have worked with.
