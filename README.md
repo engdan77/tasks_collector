@@ -180,6 +180,21 @@ ________________________________________________________________________________
 
 Could be found at https://tasks-collector.readthedocs.io
 
+## Troubleshooting
+
+I get the following message when I run tasks_collector in GUI (not --ignore-gooey) mode
+```
+This program needs access to the screen. Please run with a
+Framework build of python, and only when you are logged in
+on the main display of your Mac.
+```
+Reasons for this happening on MacOS is that your built of Python3 does not include "framework" (e.g. when you installed through homebrew) rather than from https://www.python.org/downloads/mac-osx/
+
+One way around this if you'd be using pyenv (one of my favourites) found at https://github.com/pyenv/pyenv is to install Python using the following
+```bash
+env PYTHON_CONFIGURE_OPTS="--enable-framework CC=clang" pyenv install 3.7.0
+```
+
 ## Contact
 
 You can easiest contact me by my email daniel@engvalls.eu or my linked-in profile https://www.linkedin.com/in/danielengvall/
