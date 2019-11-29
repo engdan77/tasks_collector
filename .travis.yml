@@ -1,25 +1,30 @@
-sudo: false
-language: python
-python:
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7"
-addons:
-  apt:
-    packages:
-    - libwebkitgtk-dev
-    - libjpeg-dev
-    - libtiff-dev
-    - libgtk2.0-dev
-    - libsdl1.2-dev
-    - libgstreamer-plugins-base0.10-dev
-    - freeglut3
-    - freeglut3-dev
-    - libnotify-dev
-install:
-  - sudo apt-get update
-  - wget "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.0.4-cp37-cp37m-linux_x86_64.whl"
-  - pip install wxPython-4.0.4-cp37-cp37m-linux_x86_64.whl
-  - pip install tox-travis
-script: tox
+jobs:
+  allow_failures:
+    - os: osx
+  include:
+    - stage: test
+      os: osx
+      language: sh
+      env:
+        - TOXENV=py3
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
+        - HOMEBREW_NO_ANALYTICS=1
+      before_cache:
+        # - brew cleanup
+        - rm -f "$HOME/Library/Caches/pip/log/debug.log"
+      cache:
+        directories:
+          # - "$HOME/Library/Caches/Homebrew"
+          - "$HOME/Library/Caches/pip"
+      addons:
+        homebrew:
+          # update: true
+          packages: python3
+      before_install:
+        - python3 -m pip install --upgrade virtualenv
+        - virtualenv -p python3 --system-site-packages "$HOME/venv"
+        - source "$HOME/venv/bin/activate"
+      install:
+        - pip install --upgrade -r requirements.txt
+        - pip install tox-travis
+      script: tox
