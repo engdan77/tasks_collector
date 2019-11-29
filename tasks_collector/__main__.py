@@ -8,7 +8,6 @@ import keyring
 from getpass import getpass
 import sys
 from loguru import logger
-import applescript
 
 from tasks_collector import reportgenerator
 from tasks_collector.reportgenerator.api import filter_generic_tasks, tasks_to_pastebin, create_gantt_list
