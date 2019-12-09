@@ -12,7 +12,7 @@ from loguru import logger
 from tasks_collector import reportgenerator
 from tasks_collector.reportgenerator.api import filter_generic_tasks, tasks_to_pastebin, create_gantt_list
 from tasks_collector.tasksconverter.api import to_generic
-from tasks_collector.tasksdb.api import get_default_db_path, insert_or_updates_tasks, OpenDB
+from tasks_collector.tasksdb.api import get_default_db_path, insert_or_updates_tasks, OpenDB, cleanup
 from tasks_collector.tasksscraper.jirascraper import get_jira_tasks
 from tasks_collector.tasksscraper.trelloscraper import get_trello_tasks
 import tasks_collector.tasksscraper.outlookscraper
