@@ -1,5 +1,6 @@
-from tasks_collector.tasksscraper.outlookscraper import get_outlook_tasks
+from tasks_collector.tasksscraper.outlookscraper import get_outlook_tasks, remove_invalid_brackets, fix_quotes_json_strings
 import json
+
 
 def test_get_outlook_tasks(mocker):
     with open('tests/outlook_tasks.json') as f:
@@ -35,3 +36,13 @@ def test_get_outlook_tasks(mocker):
     all_tasks = get_outlook_tasks()
     assert mocked_outlook.run.call_count == 1
     assert len(all_tasks) == 3
+
+
+def test_remove_invalid_brackets():
+    invalid_json = '[{"foo":"bar"},{{{"bar":"foo"}]'
+    assert remove_invalid_brackets(invalid_json) == '[{"foo":"bar"},{"bar":"foo"}]'
+
+
+def test_fix_quotes_json_strings():
+    invalid_json = '[{"taskName":"invalid "quotes" here","taskPriority":"priority normal"}]'
+    assert fix_quotes_json_strings(invalid_json) == """[{"taskName":"invalid 'quotes' here","taskPriority":"priority normal"}]"""
