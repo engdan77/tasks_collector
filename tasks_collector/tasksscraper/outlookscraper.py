@@ -15,8 +15,11 @@ import re
 def remove_invalid_brackets(dirty_json):
     """Sanitize JSON from extra brackets caused by AppleScript
 
-    :param dirty_json:
-    :return: JSON without extra brackets
+    Args:
+        dirty_json:
+
+    Returns: String without extra brackets
+
     """
     output_data = dirty_json.replace('\n', '')
     re_rules = [(r'(?s),[\{]{2,}', r',{')]
@@ -34,8 +37,11 @@ def remove_invalid_brackets(dirty_json):
 def fix_quotes_json_strings(dirty_json):
     """Replace double-quotes with JSON strings causing issues
 
-    :param dirty_json:
-    :return: JSON with with double to single quotes
+    Args:
+        dirty_json:
+
+    Returns: Returns a string without invalid quotes
+
     """
     output_data = dirty_json
     all_tasks = re.findall(r'"taskName":"(.+?)","', dirty_json)
