@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/engdan77/tasks_collector.svg?branch=master)](https://travis-ci.com/engdan77/tasks_collector)
 [![Documentation Status](https://readthedocs.org/projects/tasks-collector/badge/?version=latest)](https://tasks-collector.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://codecov.io/gh/engdan77/tasks_collector/branch/master/graph/badge.svg)](https://codecov.io/gh//engdan77/tasks_collector)
-[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
+[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-370/)
 
 ## Read The Docs
 You can find the documentation including generated API docs at https://tasks-collector.readthedocs.io/en/latest/
@@ -153,9 +153,9 @@ Thanks to tox this has been automated so all that you need to run "tox" from pro
 ````bash
 $ tox
 ...
-py3.7.0 run-test: commands[0] | pytest --cov=tasks_collector tests/
+py3.8.0 run-test: commands[0] | pytest --cov=tasks_collector tests/
 ...........................                                                                                                                                                                                                            [100%]
----------- coverage: platform darwin, python 3.7.1-final-0 -----------
+---------- coverage: platform darwin, python 3.8.0-final-0 -----------
 Name                                             Stmts   Miss  Cover
 --------------------------------------------------------------------
 tasks_collector/__init__.py                          1      0   100%
@@ -167,17 +167,14 @@ tasks_collector/tasksdb/__init__.py                  0      0   100%
 tasks_collector/tasksdb/api.py                      80      8    90%
 tasks_collector/tasksscraper/__init__.py             0      0   100%
 tasks_collector/tasksscraper/jirascraper.py         17      3    82%
-tasks_collector/tasksscraper/outlookscraper.py      17      1    94%
+tasks_collector/tasksscraper/outlookscraper.py      43      1    98%
 tasks_collector/tasksscraper/trelloscraper.py       37     13    65%
 --------------------------------------------------------------------
-TOTAL                                              486    148    70%
+TOTAL                                              512    148    71%
 
-27 passed, 4 warnings in 19.63s
-__________________________________________________________________________________________________________________ summary ___________________________________________________________________________________________________________________
-  py3.4.0: commands succeeded
-  py3.5.6: commands succeeded
-  py3.6.6: commands succeeded
-  py3.7.0: commands succeeded
+29 passed, 4 warnings in 17.32s
+______________________________________________________________________________________________________________________________________________________________________________ summary ______________________________________________________________________________________________________________________________________________________________________________
+  py3.8.0: commands succeeded
   congratulations :)
 ````
 
@@ -197,7 +194,7 @@ Reasons for this happening on MacOS is that your built of Python3 does not inclu
 
 One way around this if you'd be using pyenv (one of my favourites) found at https://github.com/pyenv/pyenv is to install Python using the following
 ```bash
-env PYTHON_CONFIGURE_OPTS="--enable-framework CC=clang" pyenv install 3.7.0
+env PYTHON_CONFIGURE_OPTS="--enable-framework=$(pyenv root)/versions/3.8.0 CC=clang --enable-unicode --with-threads" pyenv install 3.8.0 -v
 ```
 
 ## Contact
