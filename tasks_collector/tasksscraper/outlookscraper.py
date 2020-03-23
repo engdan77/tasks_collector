@@ -31,6 +31,7 @@ def remove_invalid_brackets(dirty_json):
             output_data = re.sub(replace_match, replace_with, output_data, re.DOTALL)
         all_ok = all([re.match(r, output_data) for r, _ in re_rules])
         current_count += 1
+    output_data = output_data.replace('{{{', '{')
     return output_data
 
 
@@ -117,8 +118,15 @@ def get_outlook_tasks() -> List:
     logger.debug(f'result after sanitizing {o}')
     o = remove_invalid_brackets(o)
     o = fix_quotes_json_strings(o)
+    if len(o) <= 10:
+        logger.warning('less than 10 characters from Outlook, probably nothing there. Skipping Outlook')
     if c == 0:
-        result = json.loads(o)
+        try:
+            result = json.loads(o)
+        except json.decoder.JSONDecodeError:
+            logger.opt(exception=True).error('unable to parse JSON from Outlook - skipping Outlook, see the body printed')
+            print(o)
+            return None
         return result
     else:
         return None
