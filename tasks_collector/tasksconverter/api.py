@@ -23,7 +23,7 @@ def format_subject(subject: str, _type='outlook') -> str:
     """
     import re
     # Highlight keywords
-    subject = re.sub('(@\w+\([^\]]+\))', '<b>\\1</b>', subject)
+    subject = re.sub(r'(@\w+\([^\]]+\))', '<b>\\1</b>', subject)
     return subject
 
 
@@ -40,8 +40,8 @@ def parse_category(category_list: List, _type='outlook') -> Dict:
     import re
 
     if _type == 'outlook':
-        rules = {'client': '\(([^\}]+)\)',
-                 'category': '\{([^\}]+)\}'}
+        rules = {r'client': r'\(([^\}]+)\)',
+                 r'category': r'\{([^\}]+)\}'}
         result = {}
         for _type in rules.keys():
             result.update({_type: None})
