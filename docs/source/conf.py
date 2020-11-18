@@ -43,6 +43,9 @@ author = 'Daniel Engvall'
 
 # -- General configuration ---------------------------------------------------
 
+# workaround to avoid error
+master_dock = 'index'
+
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
@@ -74,5 +77,3 @@ def setup(app):
             'auto_toc_tree_section': 'Contents',
             }, True)
     app.add_transform(AutoStructify)
-
-master_dock = 'index'
