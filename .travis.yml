@@ -29,5 +29,6 @@ jobs:
         - pip install codecov
         - pip install --upgrade -r requirements.txt
         - pip install tox-travis
+        - pip install tox
       script: tox
       after_success: codecov
