@@ -8,6 +8,8 @@ pandas
 dictdiffer
 appdirs
 py-trello
+runcmd
+osascript
 tox
 pytest-mock
 commonmark
