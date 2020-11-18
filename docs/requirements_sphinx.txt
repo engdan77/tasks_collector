@@ -8,7 +8,7 @@ pandas
 dictdiffer
 appdirs
 py-trello
-runcmd
+runcmd==0.0.0
 osascript
 tox
 pytest-mock
