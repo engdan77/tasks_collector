@@ -3,8 +3,6 @@ import json
 
 
 def test_get_outlook_tasks(mocker):
-    with open('tests/outlook_tasks.json') as f:
-        input_list = json.loads(f.read())
     input_list = (0, '{"taskName": "Third task",'
                      '"taskContent": "","taskFolder": '
                      '"Tasks","modifiedDate": '
@@ -45,4 +43,4 @@ def test_remove_invalid_brackets():
 
 def test_fix_quotes_json_strings():
     invalid_json = '[{"taskName":"invalid "quotes" here","taskPriority":"priority normal"}]'
-    assert fix_quotes_json_strings(invalid_json) == """[{"taskName":"invalid 'quotes' here","taskPriority":"priority normal"}]"""
+    assert fix_quotes_json_strings(invalid_json) == r'[{"taskName":"invalid \"quotes\" here","taskPriority":"priority normal"}]'

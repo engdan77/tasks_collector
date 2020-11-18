@@ -22,6 +22,7 @@ jobs:
           packages: python3
       before_install:
         - python3 -m pip install --upgrade virtualenv
+        - python3 -m pip install --upgrade tox
         - virtualenv -p python3 --system-site-packages "$HOME/venv"
         - source "$HOME/venv/bin/activate"
       install:

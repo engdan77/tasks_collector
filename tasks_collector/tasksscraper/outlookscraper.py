@@ -22,7 +22,11 @@ def remove_invalid_brackets(dirty_json):
 
     """
     output_data = dirty_json.replace('\n', '')
-    re_rules = [(r'(?s),[\{]{2,}', r',{')]
+    re_rules = [(r'(?s),\{{2,}', r',{'),
+                (r'(?s)^\[\{{2,}', r'[{'),
+                (r'(?s),\{]', r']'),
+                (r'[^:]\s"[^,]', r' \"'),
+                (r'[^,]"\s', r'\" ')]
     current_count = 1
     max_count = 100  # TODO: a nasty workaround for weird behavior found using Python 3.8
     all_ok = False
@@ -46,10 +50,10 @@ def fix_quotes_json_strings(dirty_json):
     """
     output_data = dirty_json
     all_tasks = re.findall(r'"taskName":"(.+?)","', dirty_json)
-    fix_tasks = [(t, t.replace('"', "'")) for t in all_tasks if '"' in t]
-    print(fix_tasks)
+    fix_tasks = [(t, t.replace('"', r'\"')) for t in all_tasks if '"' in t]
+    logger.debug(fix_tasks)
     for fix_from, fix_to in fix_tasks:
-        print(f'{fix_from} {fix_to}')
+        logger.debug(f'{fix_from} {fix_to}')
         output_data = output_data.replace(fix_from, fix_to)
     return output_data
 

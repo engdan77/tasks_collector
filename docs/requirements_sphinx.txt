@@ -8,7 +8,7 @@ pandas==0.23.4
 dictdiffer==0.7.1
 appdirs==1.4.3
 py-trello==0.15.0
-osascript==2019.4.13
+osascript
 tox==3.14.1
 pytest-mock==1.11.2
 commonmark==0.9.1

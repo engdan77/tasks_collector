@@ -1,4 +1,4 @@
-shiboken2==5.12.0
+shiboken2>=5.12.0
 loguru==0.3.2
 jira==2.0.0
 dateparser==0.7.0
@@ -7,7 +7,7 @@ numpy==1.17.4
 keyring==15.1.0
 matplotlib==3.3.2
 PySimpleGUIQt==0.22.0
-PySide2==5.12.0
+PySide2>=5.12.0
 Gooey==1.0.2
 pandas>=0.23.4
 dictdiffer==0.7.1
