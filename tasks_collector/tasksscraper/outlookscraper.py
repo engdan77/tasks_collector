@@ -6,7 +6,7 @@ __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
 
 import osascript
-from typing import List
+from typing import List, Union
 import json
 from loguru import logger
 import re
@@ -50,7 +50,7 @@ def fix_quotes_json_strings(dirty_json):
     """
     output_data = dirty_json
     all_tasks = re.findall(r'"taskName":"(.+?)","', dirty_json)
-    fix_tasks = [(t, t.replace('"', r'\"')) for t in all_tasks if '"' in t]
+    fix_tasks = [(t, t.replace('"', r'\"').replace(r'\\"', r'\"')) for t in all_tasks if '"' in t]
     logger.debug(fix_tasks)
     for fix_from, fix_to in fix_tasks:
         logger.debug(f'{fix_from} {fix_to}')
@@ -58,7 +58,7 @@ def fix_quotes_json_strings(dirty_json):
     return output_data
 
 
-def get_outlook_tasks() -> List:
+def get_outlook_tasks() -> Union[List, None]:
     """Get Outlook tasks
 
     Returns:
@@ -113,7 +113,7 @@ def get_outlook_tasks() -> List:
         end repeat
     end tell
     return x
-    ''') # nopep8
+    ''')  # nopep8
     o = o.strip(',')
     o = f'[{o}]'
     logger.info(f'osascript error: {e}')
@@ -128,7 +128,8 @@ def get_outlook_tasks() -> List:
         try:
             result = json.loads(o)
         except json.decoder.JSONDecodeError:
-            logger.opt(exception=True).error('unable to parse JSON from Outlook - skipping Outlook, see the body printed')
+            logger.opt(exception=True).error('unable to parse JSON from Outlook - skipping Outlook, see the body '
+                                             'printed')
             print(o)
             return None
         return result

@@ -21,6 +21,7 @@ import json
 import dateparser
 import pandas as pd
 from typing import Dict, List, Optional, Any
+import datetime
 
 __author__ = "Daniel Engvall"
 __email__ = "daniel@engvalls.eu"
@@ -256,12 +257,17 @@ def create_gantt_chart(
 
     # Add legend
     ax.legend(loc="upper left")
+    # breakpoint()
 
     # Add red line current date
     conv = np.vectorize(matplotlib.dates.strpdate2num("%Y-%m-%d"))
+    # conv = np.vectorize(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d'))
+
     now = dt.datetime.now().strftime("%Y-%m-%d")
-    # ax.axvline(conv(now), color='r', zorder=0)
-    ax.axvline(float(conv(now)), color="r", zorder=0)
+    ax.axvline(conv(now), color='r', zorder=0)
+
+    # ax.axvline(float(conv(now)), color="r", zorder=0)
+    # ax.axvline(dt.datetime.now().timestamp(), color="r", zorder=0)
 
     labelsx = ax.get_xticklabels()
     plt.setp(labelsx, rotation=30, fontsize=10)
@@ -284,6 +290,7 @@ def tasks_to_pastebin(
     _filter: bool = False,
     show_gantt: bool = True,
     default_client="None",
+    path_copyq='/Applications/CopyQ.app/Contents/MacOS/CopyQ',
 ) -> None:
     """Creates tasks and inserted to pastebin
 
@@ -317,14 +324,15 @@ def tasks_to_pastebin(
         )
 
     # Render gantt
-    gantt_list = create_gantt_list(generic_tasks, default_client)
-    gantt_b64 = get_gantt_b64(gantt_list, show_gantt)
-    # Attach image
-    email_html += (
-        '<img tasks_collector="data:image/png;base64,{}" alt="gantt.png">'.format(
-            gantt_b64
+    if show_gantt:
+        gantt_list = create_gantt_list(generic_tasks, default_client)
+        gantt_b64 = get_gantt_b64(gantt_list, show_gantt)
+        # Attach image
+        email_html += (
+            '<img tasks_collector="data:image/png;base64,{}" alt="gantt.png">'.format(
+                gantt_b64
+            )
         )
-    )
 
     # Render concurrance chart
     for t in generic_tasks:
@@ -345,13 +353,13 @@ def tasks_to_pastebin(
     logger.debug(email_html)
 
     proc = subprocess.Popen(
-        ["/usr/local/bin/copyq", "copy", "text/html", "-"],
+        [path_copyq, "copy", "text/html", "-"],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
     out, err = proc.communicate(input=email_html.encode("utf-8"))
-    logger.debug(out, err)
+    logger.debug(out.decode(), err)
 
 
 def get_gantt_b64(gantt_list: List, show_gantt: bool = True) -> str:
